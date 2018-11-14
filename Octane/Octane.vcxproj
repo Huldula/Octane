@@ -20,7 +20,6 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{DCE0B7F2-B726-4245-A85B-95980300C285}</ProjectGuid>
     <RootNamespace>Octane</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -115,6 +114,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Reader.cpp" />
+    <ClCompile Include="StringEditor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Reader.h" />
+    <ClInclude Include="StringEditor.h" />
+>>>>>>> de3c3b7feae3d3272e93db2c475239e0968e894a
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
