@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class StringEditor
 {
@@ -7,7 +8,6 @@ public:
 	StringEditor();
 	~StringEditor();
 	static void trim(std::string &s);
-	static int indexOf(std::string s, char c);
-	static void split(std::string &s, char c, std::string a[]);
+	static std::vector<std::string> split(std::string s, char c);
 };
 

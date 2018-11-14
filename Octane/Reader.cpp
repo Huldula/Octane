@@ -19,11 +19,6 @@ Reader::~Reader()
 
 void Reader::start() 
 {
-	std::string test = "Hallo ich bin nicht Leo.";
-	std::cout << test.find("ich") << std::endl;
-
-
-
 	std::ifstream input("Resources/helloWorld.oc");
 	std::string line;
 	std::cout << "starting" << std::endl;
@@ -31,7 +26,11 @@ void Reader::start()
 	while (std::getline(input, line))
 	{
 		StringEditor::trim(line);
+		std::vector<std::string> words = StringEditor::split(line, ' ');
 
-		std::string words[1];
+		for (int i = 0; i < words.size(); i++)
+		{
+			
+		}
 	}
 }

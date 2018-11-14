@@ -1,6 +1,7 @@
 #include "StringEditor.h"
 #include <algorithm>
 #include <cctype>
+#include <iostream>
 
 
 
@@ -31,12 +32,16 @@ void StringEditor::trim(std::string &s)
 	rtrim(s);
 }
 
-int StringEditor::indexOf(std::string s, char c)
+std::vector<std::string> StringEditor::split(std::string s, char c)
 {
-	return -1;
-}
+	std::vector<std::string> list;
 
-void StringEditor::split(std::string &s, char c, std::string a[])
-{
+	int last = 0, next;
+	do {
+		next = s.find(c, last);
+		list.push_back(s.substr(last, next - last));
+		last = next + 1;
+	} while (next > 0);
 
+	return list;
 }
