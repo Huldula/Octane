@@ -1,1 +1,11 @@
-print("Hello World!")
+int i
+long l
+float f
+double d
+int i = 123
+long l = -123
+float f = 2.4
+double d = 3.14
+bool b = false
+char c = 'a'
+print ("Hello World! My number is: ")

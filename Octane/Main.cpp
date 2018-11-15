@@ -1,8 +1,13 @@
 #include "Reader.h"
 #include <iostream>
+#include "Timer.h"
 
 int main() {
-	Reader::start();
+	{
+		Timer mainTimer;
+		Reader r;
+		r.start();
+	}
 	std::cin.get();
 	return 0;
 }

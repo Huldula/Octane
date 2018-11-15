@@ -5,16 +5,18 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Ressourcendateien">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Reader">
+    <Filter Include="Quelldateien\Reader">
       <UniqueIdentifier>{dffffa9e-d307-4d45-a83e-4fe23ac5a4be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Interpreter">
+      <UniqueIdentifier>{3eba2b21-c6f9-4e2b-b738-ddff75a7bb64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Helpers">
+      <UniqueIdentifier>{7d5d8bb1-b80c-4f25-844c-a9c15a63026f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,18 +24,36 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Reader.cpp">
-      <Filter>Reader</Filter>
+      <Filter>Quelldateien\Reader</Filter>
     </ClCompile>
     <ClCompile Include="StringEditor.cpp">
-      <Filter>Reader</Filter>
+      <Filter>Quelldateien\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Interpreter.cpp">
+      <Filter>Quelldateien\Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Quelldateien\Interpreter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Reader.h">
-      <Filter>Reader</Filter>
+      <Filter>Quelldateien\Reader</Filter>
     </ClInclude>
     <ClInclude Include="StringEditor.h">
-      <Filter>Reader</Filter>
+      <Filter>Quelldateien\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Interpreter.h">
+      <Filter>Quelldateien\Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Quelldateien\Interpreter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
