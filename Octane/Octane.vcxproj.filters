@@ -26,9 +26,6 @@
     <ClCompile Include="Reader.cpp">
       <Filter>Quelldateien\Reader</Filter>
     </ClCompile>
-    <ClCompile Include="StringEditor.cpp">
-      <Filter>Quelldateien\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
@@ -38,12 +35,15 @@
     <ClCompile Include="Object.cpp">
       <Filter>Quelldateien\Interpreter</Filter>
     </ClCompile>
+    <ClCompile Include="StringEditor.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Reader.h">
-      <Filter>Quelldateien\Reader</Filter>
-    </ClInclude>
-    <ClInclude Include="StringEditor.h">
       <Filter>Quelldateien\Reader</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
@@ -54,6 +54,12 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Quelldateien\Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="StringEditor.h">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>Quelldateien\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

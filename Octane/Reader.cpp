@@ -5,9 +5,9 @@
 #include <iterator>
 #include <iostream>
 
-const std::string varName = "[a-zA-Z_][a-zA-Z_0-9]*";
+const std::string Reader::varName("[a-zA-Z][a-zA-Z0-9]*");
 const std::regex Reader::rePrint("print *?\\(\"(.*)\"\\)");
-const std::regex Reader::reNumericInit("(int|long|float|double) *?(" + varName + ")(?:= *?(\\d+))");
+const std::regex Reader::reNumericInit("(int|long|float|double) *?(" + varName + ") *?(?:= *?(\\d+))?");
 
 Reader::Reader()
 {
@@ -41,6 +41,7 @@ void Reader::start()
 
 void Reader::interpret(std::string s)
 {
+	std::cout << s << std::endl;
 	//if (!s.compare("print")) {
 	//	Interpreter::print(s);
 	//}
@@ -50,9 +51,10 @@ void Reader::interpret(std::string s)
 		std::cout << matches[1] << std::endl;
 	}
 	else if (std::regex_match(s, matches, reNumericInit)) {
+		std::cout << "yeit" << std::endl;
 		allNames.push_back(matches[2]);
 		double num = 0;
-		if (matches.length() > 3)
+		if (!matches[2].compare(""))
 			num = std::stod(matches[3]);
 		else if (!matches[1].compare("int"))
 			temp = (int)num;
@@ -61,6 +63,12 @@ void Reader::interpret(std::string s)
 		else if (!matches[1].compare("float"))
 			temp = (float)num;
 
-		std::cout << temp.index << std::endl;
+		std::cout << std::get<int>(temp) << std::endl;
+		if (std::holds_alternative<int>(temp))
+			std::cout << "the variant holds an int!\n";
+		else if (std::holds_alternative<float>(temp))
+			std::cout << "the variant holds a float\n";
+		else if (std::holds_alternative<std::string>(temp))
+			std::cout << "the variant holds a string\n";
 	}
 }
