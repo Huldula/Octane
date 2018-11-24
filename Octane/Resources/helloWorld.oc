@@ -1,11 +1,24 @@
 int i
 long l
-float f
 double d
-int i = 123
-long l = -123
-float f = 2.4
-double d = 3.14
-bool b = false
-char c = 'a'
-print ("Hello World! My number is: ")
+float f
+int i0 = 123
+long l0 = -123
+float f0 = -2.4
+double d0 = 3.14
+print("Hello World! My numbers are: ")
+
+print(i)
+print(l)
+print(d)
+print(f)
+
+print(i0)
+print(l0)
+print(d0)
+print(f0)
+
+i = 5
+i = i+3
+
+print(i)

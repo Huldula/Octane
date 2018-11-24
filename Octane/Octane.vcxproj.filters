@@ -38,6 +38,9 @@
     <ClCompile Include="Object.cpp">
       <Filter>Quelldateien\Interpreter</Filter>
     </ClCompile>
+    <ClCompile Include="typevalues">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Reader.h">
