@@ -35,10 +35,14 @@
     <ClCompile Include="Object.cpp">
       <Filter>Quelldateien\Interpreter</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="StringEditor.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Helper.cpp">
+=======
+    <ClCompile Include="typevalues">
+>>>>>>> 8449dfaed9c76139c16a8d5f59d012ec637f20a1
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
