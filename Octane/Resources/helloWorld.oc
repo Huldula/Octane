@@ -12,13 +12,12 @@ print(i)
 print(l)
 print(d)
 print(f)
-
 print(i0)
 print(l0)
 print(d0)
 print(f0)
+print(i+2)
 
 i = 5
 i = i+3
-
 print(i)
