@@ -6,7 +6,8 @@
 #include <iostream>
 #include "typevalues"
 
-const std::string Reader::varName("[a-zA-Z_][a-zA-Z_0-9]*");
+const std::string Reader::varName("[a-zA-Z_]\\w*");
+const std::regex Reader::reIsVar("[^\\w]?(" + Reader::varName + ")[^\\w]?");
 const std::regex Reader::rePrintString("print *?\\(\"(.*)\"\\)");
 const std::regex Reader::rePrintVar("print *?\\((.*)\\)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
@@ -27,6 +28,10 @@ Reader::~Reader()
 
 void Reader::start() 
 {
+	std::variant<int, long, float, double, bool> var = 12345.12345;
+	std::string s = "abcdef";
+	std::cout << s.replace(1, 3, Reader::variantToString(var)) << std::endl;
+
 	std::ifstream input("Resources/helloWorld.oc");
 	std::string line;
 	std::cout << "starting" << std::endl;
@@ -68,7 +73,23 @@ void Reader::interpret(std::string s)
 
 std::string Reader::getAsString(std::string s)
 {
+	std::smatch matches;
+	std::regex_search(s, matches, reIsVar);
 
+	for (int i = 1; i < matches.size(); i++)
+	{
+		int index = s.find(matches[i]);
+		s.replace(index, index + matches[i].length(), variantToString(allObjects[nameLocations[matches[i]]]) );
+	}
+	//s = StringEditor::replace(s, " ", "");
+
+	/*std::vector<std::string> adds = StringEditor::split(s, "+");
+	for (int i = 0; i < adds.size(); i++)
+	{
+
+	}*/
+
+	return s;
 }
 
 void Reader::numericInit(std::smatch &matches)
@@ -94,20 +115,21 @@ void Reader::numericInit(std::smatch &matches)
 void Reader::printVar(std::smatch &matches)
 {
 	std::variant<int, long, float, double, bool> &temp = allObjects[nameLocations[matches[1]]];
-	switch (temp.index())
+	variantToString(temp);
+}
+
+std::string Reader::variantToString(std::variant<int, long, float, double, bool> &var)
+{
+	switch (var.index())
 	{
 	case INT:
-		std::cout << std::get<int>(temp) << std::endl;
-		break;
+		return std::to_string(std::get<int>(var));
 	case LONG:
-		std::cout << std::get<long>(temp) << std::endl;
-		break;
+		return std::to_string(std::get<long>(var));
 	case FLOAT:
-		std::cout << std::get<float>(temp) << std::endl;
-		break;
+		return std::to_string(std::get<float>(var));
 	case DOUBLE:
-		std::cout << std::get<double>(temp) << std::endl;
-		break;
+		return std::to_string(std::get<double>(var));
 	}
 }
 

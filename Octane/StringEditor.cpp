@@ -45,3 +45,33 @@ std::vector<std::string> StringEditor::split(std::string s, char c)
 
 	return list;
 }
+
+
+std::vector<std::string> StringEditor::split(std::string s, std::string c)
+{
+	std::vector<std::string> list;
+
+	int last = 0, next;
+	do {
+		next = s.find(c, last);
+		list.push_back(s.substr(last, next - last));
+		last = next + 1;
+	} while (next > 0);
+
+	return list;
+}
+
+
+std::string StringEditor::replace(std::string s, std::string toReplace, std::string replacement)
+{
+	std::vector<std::string> list = StringEditor::split(s, toReplace);
+	std::string out;
+
+	for (int i = 0; i < list.size()-1; i++)
+	{
+		out += list[i] + replacement;
+	}
+	out += list[list.size() - 1];
+
+	return out;
+}
