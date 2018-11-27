@@ -44,6 +44,9 @@
     <ClCompile Include="StringEditor.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="MathSolver.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Reader.h">
@@ -62,6 +65,9 @@
       <Filter>Quelldateien\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Helper.h">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="MathSolver.h">
       <Filter>Quelldateien\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,6 +30,7 @@ private:
 
 	static const std::string varName;
 	static const std::regex reIsVar;
+
 	static const std::regex rePrintString;
 	static const std::regex rePrintVar;
 	static const std::regex rePrint;

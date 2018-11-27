@@ -1,0 +1,15 @@
+﻿  Helper.cpp
+  Interpreter.cpp
+  Main.cpp
+  Object.cpp
+  Reader.cpp
+d:\stuff usw\code\c++\octane\octane\reader.cpp(79): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  StringEditor.cpp
+d:\stuff usw\code\c++\octane\octane\stringeditor.cpp(70): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  Timer.cpp
+  typevalues
+  Code wird generiert.
+d:\stuff usw\code\c++\octane\octane\reader.cpp(134): warning C4715: "Reader::variantToString": Nicht alle Codepfade geben einen Wert zurück.
+  All 1332 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Codegenerierung ist abgeschlossen.
+  Octane.vcxproj -> D:\Stuff usw\Code\C++\Octane\Release\Octane.exe

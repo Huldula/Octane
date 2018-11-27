@@ -8,6 +8,7 @@
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
 const std::regex Reader::reIsVar("[^\\w]?(" + Reader::varName + ")[^\\w]?");
+
 const std::regex Reader::rePrintString("print *?\\(\"(.*)\"\\)");
 const std::regex Reader::rePrintVar("print *?\\((.*)\\)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
@@ -73,13 +74,14 @@ void Reader::interpret(std::string s)
 
 std::string Reader::getAsString(std::string s)
 {
-	std::smatch matches;
-	std::regex_search(s, matches, reIsVar);
+	if (s._Starts_with("\"") && s.find("\"", 1) == s.length() - 1)
+		return s;
 
-	for (int i = 1; i < matches.size(); i++)
+	std::smatch matches;
+	while (std::regex_search(s, matches, reIsVar))
 	{
-		int index = s.find(matches[i]);
-		s.replace(index, index + matches[i].length(), variantToString(allObjects[nameLocations[matches[i]]]) );
+		int index = s.find(matches[1]);
+		s.replace(index, matches[1].length(), variantToString(allObjects[nameLocations[matches[1]]]));
 	}
 	//s = StringEditor::replace(s, " ", "");
 
