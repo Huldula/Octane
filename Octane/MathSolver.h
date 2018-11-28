@@ -1,20 +1,34 @@
 #pragma once
 
 #include <string>
+#include <variant>
 
 class MathSolver
 {
 public:
 	MathSolver();
 	~MathSolver();
-	int solve(std::string in);
+	std::variant<int, long, float, double, bool> solve(std::string in, int type);
 private:
+	char *expressionToParse;
 	char peek();
 	char get();
-	int number();
-	int factor();
-	int term();
-	int expression();
+	int intNumber();
+	int intFactor();
+	int intTerm();
+	int intExpression();
+	//long longNumber();
+	//long longFactor();
+	//long longTerm();
+	//long longExpression();
+	//float floatNumber();
+	//float floatFactor();
+	//float floatTerm();
+	//float floatExpression();
+	//double doubleNumber();
+	//double doubleFactor();
+	//double doubleTerm();
+	//double doubleExpression();
 
 };
 

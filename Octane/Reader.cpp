@@ -5,6 +5,7 @@
 #include <iterator>
 #include <iostream>
 #include "typevalues"
+#include "MathSolver.h"
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
 const std::regex Reader::reIsVar("[^\\w]?(" + Reader::varName + ")[^\\w]?");
@@ -83,6 +84,9 @@ std::string Reader::getAsString(std::string s)
 		int index = s.find(matches[1]);
 		s.replace(index, matches[1].length(), variantToString(allObjects[nameLocations[matches[1]]]));
 	}
+
+	MathSolver solver;
+	return std::to_string(solver.solve(s));
 	//s = StringEditor::replace(s, " ", "");
 
 	/*std::vector<std::string> adds = StringEditor::split(s, "+");

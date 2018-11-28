@@ -9,7 +9,6 @@ int main() {
 		r.start();
 	}
 
-
 	std::cin.get();
 	return 0;
 }

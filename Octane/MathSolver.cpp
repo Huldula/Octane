@@ -1,5 +1,6 @@
 #include "MathSolver.h"
-
+#include <iostream>
+#include "typevalues"
 
 
 MathSolver::MathSolver()
@@ -11,8 +12,6 @@ MathSolver::~MathSolver()
 {
 }
 
-const char * expressionToParse = "3*2+4*1+(4+9)*6";
-
 char MathSolver::peek()
 {
 	return *expressionToParse;
@@ -23,7 +22,7 @@ char MathSolver::get()
 	return *expressionToParse++;
 }
 
-int MathSolver::number()
+int MathSolver::intNumber()
 {
 	int result = get() - '0';
 	while (peek() >= '0' && peek() <= '9')
@@ -33,50 +32,51 @@ int MathSolver::number()
 	return result;
 }
 
-int MathSolver::factor()
+int MathSolver::intFactor()
 {
 	if (peek() >= '0' && peek() <= '9')
-		return number();
+		return intNumber();
 	else if (peek() == '(')
 	{
 		get(); // '('
-		int result = expression();
+		int result = intExpression();
 		get(); // ')'
 		return result;
 	}
 	else if (peek() == '-')
 	{
 		get();
-		return -factor();
+		return -intFactor();
 	}
 	return 0; // error
 }
 
-int MathSolver::term()
+int MathSolver::intTerm()
 {
-	int result = factor();
+	int result = intFactor();
 	while (peek() == '*' || peek() == '/')
 		if (get() == '*')
-			result *= factor();
+			result *= intFactor();
 		else
-			result /= factor();
+			result /= intFactor();
 	return result;
 }
 
-int MathSolver::expression(std::string in)
+int MathSolver::intExpression()
 {
-	int result = term();
+	int result = intTerm();
 	while (peek() == '+' || peek() == '-')
 		if (get() == '+')
-			result += term();
+			result += intTerm();
 		else
-			result -= term();
+			result -= intTerm();
 	return result;
 }
 
-int MathSolver::solve(std::string in)
+std::variant<int, long, float, double, bool> MathSolver::solve(std::string in, int type)
 {
-	int result = expression(in);
+	expressionToParse = in.data();
+	int result = intExpression();
 
-	return 0;
+	return result;
 }
