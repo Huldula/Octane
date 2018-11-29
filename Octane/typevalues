@@ -4,3 +4,4 @@
 #define DOUBLE 3
 #define BOOL 4
 #define CHAR 5
+#define SHORT 6

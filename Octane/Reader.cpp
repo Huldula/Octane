@@ -19,6 +19,7 @@ const std::regex Reader::reString("\".*\"");
 
 Reader::Reader()
 {
+	mem = (char*)malloc(10000);
 }
 
 
@@ -72,11 +73,10 @@ std::string Reader::getAsString(std::string s)
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		int index = s.find(matches[1]);
-		//std::variant<int, long, float, double, bool> &var = allObjects[nameLocations[matches[1]]];
-		Object &obj = nameLocations[matches[1]];
+		Object &var = nameLocations[matches[1]];
 		if (type == -1)
-			type = obj.location;
-		s.replace(index, matches[1].length(), std::to_string());
+			type = var.type;
+		s.replace(index, matches[1].length(), std::to_string(mem[(long long)var.location]));
 	}
 	
 	switch (type)
@@ -113,28 +113,43 @@ std::string Reader::getAsString(std::string s)
 
 void Reader::numericInit(std::smatch &matches)
 {
-	std::variant<int, long, float, double, bool> var;
-
+	Object obj;
+	std::string val = "0";
 	if (matches.size() > 3 && matches[3].length() > 0)
-	{
-		if (!matches[1].compare("int"))
-			var = std::stoi(matches[3]);
-		else if (!matches[1].compare("double"))
-			var = std::stod(matches[3]);
-		else if (!matches[1].compare("long"))
-			var = std::stol(matches[3]);
-		else if (!matches[1].compare("float"))
-			var = std::stof(matches[3]);
+		val = matches[3];
+
+	if (!matches[1].compare("int")) {
+		(mem)[pointer] = std::stoi(val);
+		obj.type = INT;
+		obj.location = (char*)pointer;
+		pointer += sizeof(int);
+	}
+	else if (!matches[1].compare("long")) {
+		(mem)[pointer] = std::stol(val);
+		obj.type = LONG;
+		obj.location = (char*)pointer;
+		pointer += sizeof(long long);
+	}
+	else if (!matches[1].compare("float")) {
+		(mem)[pointer] = std::stof(val);
+		obj.type = FLOAT;
+		obj.location = (char*)pointer;
+		pointer += sizeof(float);
+	}
+	else if (!matches[1].compare("double")) {
+		(mem)[pointer] = std::stod(val);
+		obj.type = DOUBLE;
+		obj.location = (char*)pointer;
+		pointer += sizeof(double);
 	}
 
-	allObjects.push_back(var);
-	nameLocations[matches[2]] = allObjects.size() - 1;
+	nameLocations[matches[2]] = obj;
+	std::cout << pointer << std::endl;
 }
 
 void Reader::printVar(std::smatch &matches)
 {
-	std::variant<int, long, float, double, bool> &temp = allObjects[nameLocations[matches[1]]];
-	variantToString(temp);
+	std::cout << std::to_string(*(char*)nameLocations[matches[1]].location) << std::endl;
 }
 
 //std::string Reader::variantToString(std::variant<int, long, float, double, bool> &var)

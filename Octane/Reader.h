@@ -21,12 +21,12 @@ public:
 
 	void numericInit(std::smatch &matches);
 	void printVar(std::smatch &matches);
-	std::string variantToString(std::variant<int, long, float, double, bool> &var);
 	void printString(std::smatch &matches);
 
 private:
+	char* mem;
+	int pointer;
 	std::map<std::string, Object> nameLocations;
-	//std::vector<std::variant<int, long, float, double, bool>> allObjects;
 
 
 	static const std::string varName;
