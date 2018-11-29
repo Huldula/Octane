@@ -3,6 +3,7 @@
 #include "Timer.h"
 
 int main() {
+	std::cout << "Test Branch" << std::endl;
 	{
 		Timer mainTimer;
 		Reader r;
