@@ -25,9 +25,9 @@ public:
 	void printString(std::smatch &matches);
 
 private:
-	std::map<std::string, int> nameLocations;
-	std::vector<std::variant<int, long, float, double, bool>> allObjects;
-	//std::variant<int, long, float, double, bool> getValue(std::string s);
+	std::map<std::string, Object> nameLocations;
+	//std::vector<std::variant<int, long, float, double, bool>> allObjects;
+
 
 	static const std::string varName;
 	static const std::regex reIsVar;

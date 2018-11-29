@@ -29,10 +29,6 @@ Reader::~Reader()
 
 void Reader::start() 
 {
-	std::variant<int, long, float, double, bool> var = 12345.12345;
-	std::string s = "abcdef";
-	std::cout << s.replace(1, 3, Reader::variantToString(var)) << std::endl;
-
 	std::ifstream input("Resources/helloWorld.oc");
 	std::string line;
 	std::cout << "starting" << std::endl;
@@ -40,12 +36,6 @@ void Reader::start()
 	while (std::getline(input, line))
 	{
 		StringEditor::trim(line);
-		//std::vector<std::string> words = StringEditor::split(line, ' ');
-
-		//for (int i = 0; i < words.size(); i++)
-		//{
-		//	interpret(words[i]);
-		//}
 
 		if (line.length() > 0)
 			interpret(line);
@@ -82,12 +72,13 @@ std::string Reader::getAsString(std::string s)
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		int index = s.find(matches[1]);
-		std::variant<int, long, float, double, bool> &var = allObjects[nameLocations[matches[1]]];
+		//std::variant<int, long, float, double, bool> &var = allObjects[nameLocations[matches[1]]];
+		Object &obj = nameLocations[matches[1]];
 		if (type == -1)
-			type = var.index();
-		s.replace(index, matches[1].length(), variantToString(var));
+			type = obj.location;
+		s.replace(index, matches[1].length(), std::to_string());
 	}
-
+	
 	switch (type)
 	{
 	case INT:
@@ -117,25 +108,6 @@ std::string Reader::getAsString(std::string s)
 	default:
 		return s;
 	}
-	//switch (type)
-	//{
-	//case INT:
-	//	return std::to_string(solver.solve<int>(s));
-	//case LONG:
-	//	return std::to_string(solver.solve<long>(s));
-	//case FLOAT:
-	//	return std::to_string(solver.solve<float>(s));
-	//case DOUBLE:
-	//	return std::to_string(solver.solve<double>(s));
-	//}
-	//s = StringEditor::replace(s, " ", "");
-
-	/*std::vector<std::string> adds = StringEditor::split(s, "+");
-	for (int i = 0; i < adds.size(); i++)
-	{
-
-	}*/
-
 	return s;
 }
 
@@ -165,20 +137,20 @@ void Reader::printVar(std::smatch &matches)
 	variantToString(temp);
 }
 
-std::string Reader::variantToString(std::variant<int, long, float, double, bool> &var)
-{
-	switch (var.index())
-	{
-	case INT:
-		return std::to_string(std::get<int>(var));
-	case LONG:
-		return std::to_string(std::get<long>(var));
-	case FLOAT:
-		return std::to_string(std::get<float>(var));
-	case DOUBLE:
-		return std::to_string(std::get<double>(var));
-	}
-}
+//std::string Reader::variantToString(std::variant<int, long, float, double, bool> &var)
+//{
+//	switch (var.index())
+//	{
+//	case INT:
+//		return std::to_string(std::get<int>(var));
+//	case LONG:
+//		return std::to_string(std::get<long>(var));
+//	case FLOAT:
+//		return std::to_string(std::get<float>(var));
+//	case DOUBLE:
+//		return std::to_string(std::get<double>(var));
+//	}
+//}
 
 void Reader::printString(std::smatch &matches)
 {

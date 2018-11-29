@@ -16,6 +16,7 @@ MathSolver<T>::MathSolver()
 template <typename T>
 MathSolver<T>::~MathSolver()
 {
+
 }
 
 template <typename T>

@@ -38,9 +38,6 @@
     <ClCompile Include="typevalues">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Helper.cpp">
-      <Filter>Quelldateien\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="StringEditor.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
@@ -62,9 +59,6 @@
       <Filter>Quelldateien\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="StringEditor.h">
-      <Filter>Quelldateien\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Helper.h">
       <Filter>Quelldateien\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="MathSolver.h">
