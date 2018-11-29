@@ -2,21 +2,23 @@
 
 #include <string>
 #include <variant>
+#include "Reader.h"
 
+template <typename T>
 class MathSolver
 {
 public:
 	MathSolver();
 	~MathSolver();
-	std::variant<int, long, float, double, bool> solve(std::string in, int type);
+	T solve(std::string in);
 private:
 	char *expressionToParse;
 	char peek();
 	char get();
-	int intNumber();
-	int intFactor();
-	int intTerm();
-	int intExpression();
+	T number();
+	T factor();
+	T term();
+	T expression();
 	//long longNumber();
 	//long longFactor();
 	//long longTerm();

@@ -6,6 +6,7 @@
 #include <string>
 #include <regex>
 #include <map>
+#include "MathSolver.h"
 
 
 class Reader
@@ -26,7 +27,7 @@ public:
 private:
 	std::map<std::string, int> nameLocations;
 	std::vector<std::variant<int, long, float, double, bool>> allObjects;
-	std::variant<int, long, float, double, bool> getValue(std::string s);
+	//std::variant<int, long, float, double, bool> getValue(std::string s);
 
 	static const std::string varName;
 	static const std::regex reIsVar;

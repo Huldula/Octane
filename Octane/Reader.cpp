@@ -5,7 +5,6 @@
 #include <iterator>
 #include <iostream>
 #include "typevalues"
-#include "MathSolver.h"
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
 const std::regex Reader::reIsVar("[^\\w]?(" + Reader::varName + ")[^\\w]?");
@@ -78,15 +77,57 @@ std::string Reader::getAsString(std::string s)
 	if (s._Starts_with("\"") && s.find("\"", 1) == s.length() - 1)
 		return s;
 
+	int type = -1;
 	std::smatch matches;
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		int index = s.find(matches[1]);
-		s.replace(index, matches[1].length(), variantToString(allObjects[nameLocations[matches[1]]]));
+		std::variant<int, long, float, double, bool> &var = allObjects[nameLocations[matches[1]]];
+		if (type == -1)
+			type = var.index();
+		s.replace(index, matches[1].length(), variantToString(var));
 	}
 
-	MathSolver solver;
-	return std::to_string(solver.solve(s));
+	switch (type)
+	{
+	case INT:
+	{
+		MathSolver<int> solver;
+		s = std::to_string(solver.solve(s));
+		break;
+	}
+	case LONG:
+	{
+		MathSolver<long> solver;
+		s = std::to_string(solver.solve(s));
+		break;
+	}
+	case FLOAT:
+	{
+		MathSolver<float> solver;
+		s = std::to_string(solver.solve(s));
+		break;
+	}
+	case DOUBLE:
+	{
+		MathSolver<double> solver;
+		s = std::to_string(solver.solve(s));
+		break;
+	}
+	default:
+		return s;
+	}
+	//switch (type)
+	//{
+	//case INT:
+	//	return std::to_string(solver.solve<int>(s));
+	//case LONG:
+	//	return std::to_string(solver.solve<long>(s));
+	//case FLOAT:
+	//	return std::to_string(solver.solve<float>(s));
+	//case DOUBLE:
+	//	return std::to_string(solver.solve<double>(s));
+	//}
 	//s = StringEditor::replace(s, " ", "");
 
 	/*std::vector<std::string> adds = StringEditor::split(s, "+");

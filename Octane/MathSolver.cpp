@@ -2,29 +2,38 @@
 #include <iostream>
 #include "typevalues"
 
+template class MathSolver<int>;
+template class MathSolver<long>;
+template class MathSolver<float>;
+template class MathSolver<double>;
 
-MathSolver::MathSolver()
+template <typename T>
+MathSolver<T>::MathSolver()
 {
 }
 
 
-MathSolver::~MathSolver()
+template <typename T>
+MathSolver<T>::~MathSolver()
 {
 }
 
-char MathSolver::peek()
+template <typename T>
+char MathSolver<T>::peek()
 {
 	return *expressionToParse;
 }
 
-char MathSolver::get()
+template <typename T>
+char MathSolver<T>::get()
 {
 	return *expressionToParse++;
 }
 
-int MathSolver::intNumber()
+template <typename T>
+T MathSolver<T>::number()
 {
-	int result = get() - '0';
+	T result = get() - '0';
 	while (peek() >= '0' && peek() <= '9')
 	{
 		result = 10 * result + get() - '0';
@@ -32,51 +41,53 @@ int MathSolver::intNumber()
 	return result;
 }
 
-int MathSolver::intFactor()
+template <typename T>
+T MathSolver<T>::factor()
 {
 	if (peek() >= '0' && peek() <= '9')
-		return intNumber();
+		return number();
 	else if (peek() == '(')
 	{
 		get(); // '('
-		int result = intExpression();
+		T result = expression();
 		get(); // ')'
 		return result;
 	}
 	else if (peek() == '-')
 	{
 		get();
-		return -intFactor();
+		return -factor();
 	}
 	return 0; // error
 }
 
-int MathSolver::intTerm()
+template <typename T>
+T MathSolver<T>::term()
 {
-	int result = intFactor();
+	T result = factor();
 	while (peek() == '*' || peek() == '/')
 		if (get() == '*')
-			result *= intFactor();
+			result *= factor();
 		else
-			result /= intFactor();
+			result /= factor();
 	return result;
 }
 
-int MathSolver::intExpression()
+template <typename T>
+T MathSolver<T>::expression()
 {
-	int result = intTerm();
+	T result = term();
 	while (peek() == '+' || peek() == '-')
 		if (get() == '+')
-			result += intTerm();
+			result += term();
 		else
-			result -= intTerm();
+			result -= term();
 	return result;
 }
 
-std::variant<int, long, float, double, bool> MathSolver::solve(std::string in, int type)
+template <typename T>
+T MathSolver<T>::solve(std::string in)
 {
 	expressionToParse = in.data();
-	int result = intExpression();
-
-	return result;
+	return expression();
 }
