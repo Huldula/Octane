@@ -15,17 +15,17 @@ public:
 	Reader();
 	~Reader();
 	void start();
-	void interpret(std::string s);
+	void interpret(const std::string& s);
 
-	std::string getAsString(std::string s);
+	std::string get_as_string(std::string s);
 
 	void numericInit(std::smatch &matches);
 	void printVar(std::smatch &matches);
-	void printString(std::smatch &matches);
+	static void printString(std::smatch &matches);
 
 private:
-	char* mem;
-	int pointer;
+	//char* mem;
+	//long long pointer;
 	std::map<std::string, Object> nameLocations;
 
 

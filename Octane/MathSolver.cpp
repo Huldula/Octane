@@ -1,16 +1,14 @@
 #include "MathSolver.h"
-#include <iostream>
-#include "typevalues"
 
 template class MathSolver<int>;
 template class MathSolver<long>;
 template class MathSolver<float>;
 template class MathSolver<double>;
+template class MathSolver<short>;
 
 template <typename T>
 MathSolver<T>::MathSolver()
-{
-}
+= default;
 
 
 template <typename T>
@@ -20,7 +18,7 @@ MathSolver<T>::~MathSolver()
 }
 
 template <typename T>
-char MathSolver<T>::peek()
+char MathSolver<T>::peek() const
 {
 	return *expressionToParse;
 }

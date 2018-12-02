@@ -5,7 +5,7 @@ float f
 int i0 = 123
 long l0 = -123
 float f0 = -2.4
-double d0 = 3.14
+double d0 = 3.141234567890
 print("Hello World! My numbers are: ")
 
 print(i)

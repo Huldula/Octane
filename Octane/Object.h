@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include "typevalues"
-
 class Object
 {
 public:
@@ -11,6 +8,6 @@ public:
 	~Object();
 	int type;
 	char* location;
-	int size();
+	int size() const;
 };
 

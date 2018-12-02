@@ -1,22 +1,20 @@
 #include "Object.h"
+#include "typevalues"
 
 
 
-Object::Object()
+Object::Object() : type(-1), location((char*)-1)
 {
 }
 
-Object::Object(int type_, char* location_)
+Object::Object(const int type_, char* location_) : type(type_), location(location_)
 {
-	type = type_;
-	location = location_;
 }
 
 Object::~Object()
-{
-}
+= default;
 
-int Object::size()
+int Object::size() const
 {
 	switch (type)
 	{
@@ -34,6 +32,7 @@ int Object::size()
 		return 1;
 	case SHORT:
 		return 2;
+	default:
+		return 0;
 	}
-	return 0;
 }

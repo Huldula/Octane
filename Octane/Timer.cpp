@@ -2,15 +2,14 @@
 
 
 
-Timer::Timer()
+Timer::Timer(): duration(), name("")
 {
 	start = std::chrono::high_resolution_clock::now();
-	name = "";
 }
 
-Timer::Timer(std::string name)
+Timer::Timer(const std::string& name) : duration(), name(name + " ")
 {
-	this->name = name + " ";
+	start = std::chrono::high_resolution_clock::now();
 }
 
 
@@ -23,6 +22,6 @@ void Timer::stop()
 {
 	duration = std::chrono::high_resolution_clock::now() - start;
 
-	float ms = duration.count() * 1000.0f;
+	const float ms = duration.count() * 1000.0f;
 	std::cout << "Timer " << name.data() << "took " << ms << "ms" << std::endl;
 }
