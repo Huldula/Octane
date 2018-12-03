@@ -1,12 +1,8 @@
 #pragma once
 
-#include "Object.h"
-#include <vector>
-#include <variant>
+#include "Memory.h"
 #include <string>
 #include <regex>
-#include <map>
-#include "MathSolver.h"
 
 
 class Reader
@@ -24,10 +20,7 @@ public:
 	static void printString(std::smatch &matches);
 
 private:
-	//char* mem;
-	//long long pointer;
-	std::map<std::string, Object> nameLocations;
-
+	Memory mem;
 
 	static const std::string varName;
 	static const std::regex reIsVar;

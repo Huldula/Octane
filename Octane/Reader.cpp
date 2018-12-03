@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include "typevalues"
+#include "MathSolver.h"
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
 const std::regex Reader::reIsVar("[^\\w]?(" + Reader::varName + ")[^\\w]?");
@@ -68,11 +69,10 @@ std::string Reader::get_as_string(std::string s)
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		const int index = s.find(matches[1]);
-		Object& var = nameLocations[matches[1]];
+		const Object var = mem.getVar(matches[1]);
 		if (type == -1)
 			type = var.type;
-		//s.replace(index, matches[1].length(), std::to_string(mem[(long long)var.location]));
-		s.replace(index, matches[1].length(), std::to_string(*/*(short*)*/var.location));
+		s.replace(index, matches[1].length(), std::to_string(*(char*)/*(short*)*/var.location));
 	}
 
 	switch (type)
@@ -109,59 +109,28 @@ std::string Reader::get_as_string(std::string s)
 
 void Reader::numericInit(std::smatch &matches)
 {
-	Object obj;
 	std::string val = "0";
 	if (matches.size() > 3 && matches[3].length() > 0)
 		val = matches[3];
 
 	if (!matches[1].compare("int")) {
-		void* loc = malloc(sizeof(int));
-		((char*)loc)[0] = std::stoi(val);
-		obj.type = INT;
-		obj.location = (char*)loc;
+		mem.addVar(matches[2], INT, new int(std::stoi(val)));
 	}
 	else if (!matches[1].compare("long")) {
-		void* loc = malloc(sizeof(long long));
-		((char*)loc)[0] = std::stol(val);
-		obj.type = LONG;
-		obj.location = (char*)loc;
+		mem.addVar(matches[2], LONG, new long(std::stol(val)));
 	}
 	else if (!matches[1].compare("float")) {
-		void* loc = malloc(sizeof(int));
-		((char*)loc)[0] = std::stof(val);
-		obj.type = FLOAT;
-		obj.location = (char*)loc;
+		mem.addVar(matches[2], FLOAT, new float(std::stof(val)));
 	}
 	else if (!matches[1].compare("double")) {
-		void* loc = malloc(sizeof(int));
-		((char*)loc)[0] = std::stod(val);
-		obj.type = DOUBLE;
-		obj.location = (char*)loc;
+		mem.addVar(matches[2], DOUBLE, new double(std::stod(val)));
 	}
-
-	nameLocations[matches[2]] = obj;
-	//std::cout << pointer << std::endl;
 }
 
 void Reader::printVar(std::smatch &matches)
 {
-	std::cout << std::to_string(*(short*)nameLocations[matches[1]].location) << std::endl;
+	std::cout << std::to_string(*(short*)mem.getLocation(matches[1])) << std::endl;
 }
-
-//std::string Reader::variantToString(std::variant<int, long, float, double, bool> &var)
-//{
-//	switch (var.index())
-//	{
-//	case INT:
-//		return std::to_string(std::get<int>(var));
-//	case LONG:
-//		return std::to_string(std::get<long>(var));
-//	case FLOAT:
-//		return std::to_string(std::get<float>(var));
-//	case DOUBLE:
-//		return std::to_string(std::get<double>(var));
-//	}
-//}
 
 void Reader::printString(std::smatch &matches)
 {

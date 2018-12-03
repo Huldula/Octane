@@ -7,7 +7,7 @@ Object::Object() : type(-1), location((char*)-1)
 {
 }
 
-Object::Object(const int type_, char* location_) : type(type_), location(location_)
+Object::Object(const int type_, void* location_) : type(type_), location(location_)
 {
 }
 

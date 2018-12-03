@@ -18,6 +18,9 @@
     <Filter Include="Quelldateien\Helpers">
       <UniqueIdentifier>{7d5d8bb1-b80c-4f25-844c-a9c15a63026f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Memory">
+      <UniqueIdentifier>{1643d260-c6b2-4fad-8893-f47d7a71aa5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -32,9 +35,6 @@
     <ClCompile Include="Interpreter.cpp">
       <Filter>Quelldateien\Interpreter</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Quelldateien\Interpreter</Filter>
-    </ClCompile>
     <ClCompile Include="typevalues">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
@@ -43,6 +43,12 @@
     </ClCompile>
     <ClCompile Include="MathSolver.cpp">
       <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Quelldateien\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Quelldateien\Memory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,14 +61,17 @@
     <ClInclude Include="Interpreter.h">
       <Filter>Quelldateien\Interpreter</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Quelldateien\Interpreter</Filter>
-    </ClInclude>
     <ClInclude Include="StringEditor.h">
       <Filter>Quelldateien\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="MathSolver.h">
       <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Quelldateien\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Quelldateien\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

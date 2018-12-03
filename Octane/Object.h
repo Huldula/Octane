@@ -4,10 +4,10 @@ class Object
 {
 public:
 	Object();
-	Object(int type_, char* location_);
+	Object(int type_, void* location_);
 	~Object();
 	int type;
-	char* location;
+	void* location;
 	int size() const;
 };
 
