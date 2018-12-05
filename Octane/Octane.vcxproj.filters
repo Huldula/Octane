@@ -12,9 +12,6 @@
     <Filter Include="Quelldateien\Reader">
       <UniqueIdentifier>{dffffa9e-d307-4d45-a83e-4fe23ac5a4be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Interpreter">
-      <UniqueIdentifier>{3eba2b21-c6f9-4e2b-b738-ddff75a7bb64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Helpers">
       <UniqueIdentifier>{7d5d8bb1-b80c-4f25-844c-a9c15a63026f}</UniqueIdentifier>
     </Filter>
@@ -31,9 +28,6 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="Interpreter.cpp">
-      <Filter>Quelldateien\Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="typevalues">
       <Filter>Quelldateien\Helpers</Filter>
@@ -57,9 +51,6 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Quelldateien\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Interpreter.h">
-      <Filter>Quelldateien\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="StringEditor.h">
       <Filter>Quelldateien\Helpers</Filter>

@@ -3,7 +3,7 @@
 
 
 
-Object::Object() : type(-1), location((char*)-1)
+Object::Object() : type(-1), location(nullptr)
 {
 }
 

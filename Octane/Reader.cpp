@@ -72,38 +72,19 @@ std::string Reader::get_as_string(std::string s)
 		const Object var = mem.getVar(matches[1]);
 		if (type == -1)
 			type = var.type;
-		s.replace(index, matches[1].length(), std::to_string(*(char*)/*(short*)*/var.location));
+		std::string val;
+		#define TO_STRING(type) val = std::to_string(*(type*)var.location);
+		SWITCH(TO_STRING, EMPTY);
+		s.replace(index, matches[1].length(), val);
 	}
 
-	switch (type)
-	{
-	case INT:
-		{
-			MathSolver<int> solver;
-			s = std::to_string(solver.solve(s));
-			break;
+	#define MATH_SOLVE(type) { \
+		MathSolver<type> solver; \
+		s = std::to_string(solver.solve(s)); \
+		break; \
 		}
-	case LONG:
-		{
-			MathSolver<long> solver;
-			s = std::to_string(solver.solve(s));
-			break;
-		}
-	case FLOAT:
-		{
-			MathSolver<float> solver;
-			s = std::to_string(solver.solve(s));
-			break;
-		}
-	case DOUBLE:
-		{
-			MathSolver<double> solver;
-			s = std::to_string(solver.solve(s));
-			break;
-		}
-	default:
-		return s;
-	}
+
+	SWITCH(MATH_SOLVE, return s;);
 	return s;
 }
 

@@ -10,6 +10,7 @@ public:
 	MathSolver();
 	~MathSolver();
 	T solve(std::string in);
+	T solve(T* location);
 private:
 	char* expressionToParse;
 	char peek() const;

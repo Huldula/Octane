@@ -4,6 +4,7 @@ template class MathSolver<int>;
 template class MathSolver<long>;
 template class MathSolver<float>;
 template class MathSolver<double>;
+template class MathSolver<char>;
 template class MathSolver<short>;
 
 template <typename T>
@@ -88,5 +89,12 @@ template <typename T>
 T MathSolver<T>::solve(std::string in)
 {
 	expressionToParse = in.data();
+	return expression();
+}
+
+template <typename T>
+T MathSolver<T>::solve(T* location)
+{
+	//expressionToParse = in.data();
 	return expression();
 }

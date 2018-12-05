@@ -5,3 +5,28 @@
 #define BOOL 4
 #define CHAR 5
 #define SHORT 6
+
+#define SWITCH(command, other) switch(type) { \
+	case INT: \
+		command(int); \
+		break; \
+	case LONG: \
+		command(long); \
+		break; \
+	case FLOAT: \
+		command(float); \
+		break; \
+	case DOUBLE: \
+		command(double); \
+		break; \
+	case CHAR: \
+		command(char); \
+		break; \
+	case SHORT: \
+		command(short); \
+		break; \
+	default: \
+		other \
+	}
+
+#define EMPTY break;
