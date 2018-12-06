@@ -6,12 +6,14 @@
 #include "MathSolver.h"
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
-const std::regex Reader::reIsVar("[^\\w]?(" + Reader::varName + ")[^\\w]?");
+const std::string Reader::simpleDT("(int|long|float|double|char|short)");
+const std::regex Reader::reIsVar("[^\\w]?(" + varName + ")[^\\w]?");
 
 const std::regex Reader::rePrintString("print *?\\(\"(.*)\"\\)");
 const std::regex Reader::rePrintVar("print *?\\((.*)\\)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
-const std::regex Reader::reNumericInit("(int|long|float|double) *?(" + varName + R"()(?: *?= *?(-?\d+(?:\.?\d*)))?)");
+const std::regex Reader::reNumericInit(simpleDT + " *?(" + Reader::varName + R"()(?: *?= *?((?:-|)\d+(?:\.?\d*)))?)");
+const std::regex Reader::reNumericAssign(Reader::varName + R"( *?= *?((?:-|)?\d+(?:\.?\d*)))");
 
 const std::regex Reader::reString("\".*\"");
 
@@ -57,6 +59,10 @@ void Reader::interpret(const std::string& s)
 	else if (std::regex_match(s, matches, reNumericInit)) {
 		numericInit(matches);
 	}
+	else
+	{
+		std::cout << "WTF is das: " << s << std::endl;
+	}
 }
 
 std::string Reader::get_as_string(std::string s)
@@ -95,17 +101,50 @@ void Reader::numericInit(std::smatch &matches)
 		val = matches[3];
 
 	if (!matches[1].compare("int")) {
-		mem.addVar(matches[2], INT, new int(std::stoi(val)));
+		MathSolver<int> solver;
+		mem.addVar(matches[2], INT, new int(solver.solve(val)));
 	}
 	else if (!matches[1].compare("long")) {
-		mem.addVar(matches[2], LONG, new long(std::stol(val)));
+		MathSolver<long> solver;
+		mem.addVar(matches[2], LONG, new long(solver.solve(val)));
 	}
 	else if (!matches[1].compare("float")) {
-		mem.addVar(matches[2], FLOAT, new float(std::stof(val)));
+		MathSolver<float> solver;
+		mem.addVar(matches[2], FLOAT, new float(solver.solve(val)));
 	}
 	else if (!matches[1].compare("double")) {
-		mem.addVar(matches[2], DOUBLE, new double(std::stod(val)));
+		MathSolver<double> solver;
+		mem.addVar(matches[2], DOUBLE, new double(solver.solve(val)));
 	}
+	else if (!matches[1].compare("char")) {
+		MathSolver<char> solver;
+		mem.addVar(matches[2], CHAR, new char(solver.solve(val)));
+	}
+	else if (!matches[1].compare("short")) {
+		MathSolver<short> solver;
+		mem.addVar(matches[2], SHORT, new short(solver.solve(val)));
+	}
+}
+
+void Reader::numericAssign(std::smatch &matches)
+{
+
+	//#define TO_STRING(type) val = std::to_string(*(type*)var.location);
+	//SWITCH(mem.getType(matches[1]), TO_STRING, EMPTY);
+
+
+	//if (!matches[1].compare("int")) {
+	//	mem.addVar(matches[2], INT, new int(std::stoi(val)));
+	//}
+	//else if (!matches[1].compare("long")) {
+	//	mem.addVar(matches[2], LONG, new long(std::stol(val)));
+	//}
+	//else if (!matches[1].compare("float")) {
+	//	mem.addVar(matches[2], FLOAT, new float(std::stof(val)));
+	//}
+	//else if (!matches[1].compare("double")) {
+	//	mem.addVar(matches[2], DOUBLE, new double(std::stod(val)));
+	//}
 }
 
 void Reader::printVar(std::smatch &matches)

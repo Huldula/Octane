@@ -2,7 +2,8 @@ int i
 long l
 double d
 float f
-int i0 = 123
+int test = 
+int i0 = 122
 long l0 = -123
 float f0 = -2.4
 double d0 = 3.141234567890
@@ -12,6 +13,7 @@ print(i)
 print(l)
 print(d)
 print(f)
+print(test)
 print(i0)
 print(-l0)
 print(d0)

@@ -3,6 +3,7 @@
 #include "Memory.h"
 #include <string>
 #include <regex>
+#include "MathSolver.h"
 
 
 class Reader
@@ -16,6 +17,7 @@ public:
 	std::string get_as_string(std::string s);
 
 	void numericInit(std::smatch &matches);
+	void numericAssign(std::smatch &matches);
 	void printVar(std::smatch &matches);
 	static void printString(std::smatch &matches);
 
@@ -23,13 +25,16 @@ private:
 	Memory mem;
 
 	static const std::string varName;
+	static const std::string simpleDT;
 	static const std::regex reIsVar;
 
 	static const std::regex rePrintString;
 	static const std::regex rePrintVar;
 	static const std::regex rePrint;
 	static const std::regex reNumericInit;
+	static const std::regex reNumericAssign;
 
 	static const std::regex reString;
+
 };
 
