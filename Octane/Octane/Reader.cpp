@@ -1,5 +1,3 @@
-// git test
-
 #include "Reader.h"
 #include "StringEditor.h"
 #include <fstream>

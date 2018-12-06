@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Quelldateien\Reader">
+      <UniqueIdentifier>{dffffa9e-d307-4d45-a83e-4fe23ac5a4be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Helpers">
+      <UniqueIdentifier>{7d5d8bb1-b80c-4f25-844c-a9c15a63026f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Memory">
+      <UniqueIdentifier>{1643d260-c6b2-4fad-8893-f47d7a71aa5b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Reader.cpp">
+      <Filter>Quelldateien\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="StringEditor.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="MathSolver.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Quelldateien\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Quelldateien\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="typevalues.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Reader.h">
+      <Filter>Quelldateien\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="StringEditor.h">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="MathSolver.h">
+      <Filter>Quelldateien\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Quelldateien\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Quelldateien\Memory</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

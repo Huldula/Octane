@@ -1,0 +1,25 @@
+int i
+long l
+double d
+float f
+int test = 
+int i0 = 122
+long l0 = -123
+float f0 = -2.4
+double d0 = 3.141234567890
+print("Hello World! My numbers are: ")
+
+print(i)
+print(l)
+print(d)
+print(f)
+print(test)
+print(i0)
+print(-l0)
+print(d0)
+print(f0)
+print(i0+(2*l0)-d0)
+
+i = 5
+i = i+3
+print(i)
