@@ -1,5 +1,5 @@
 #include "Object.h"
-#include "typevalues"
+#include "typevalues.cpp"
 
 
 

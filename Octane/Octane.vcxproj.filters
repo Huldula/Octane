@@ -29,9 +29,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="typevalues">
-      <Filter>Quelldateien\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="StringEditor.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
@@ -43,6 +40,9 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Quelldateien\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="typevalues.cpp">
+      <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

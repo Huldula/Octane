@@ -6,7 +6,7 @@
 #define CHAR 5
 #define SHORT 6
 
-#define SWITCH(command, other) switch(type) { \
+#define SWITCH(varName, command, other) switch(varName) { \
 	case INT: \
 		command(int); \
 		break; \

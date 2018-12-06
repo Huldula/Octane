@@ -1,4 +1,5 @@
 #include "MathSolver.h"
+#include <complex>
 
 template class MathSolver<int>;
 template class MathSolver<long>;
@@ -14,9 +15,7 @@ MathSolver<T>::MathSolver()
 
 template <typename T>
 MathSolver<T>::~MathSolver()
-{
-
-}
+= default;
 
 template <typename T>
 char MathSolver<T>::peek() const
@@ -35,8 +34,13 @@ T MathSolver<T>::number()
 {
 	T result = get() - '0';
 	while (peek() >= '0' && peek() <= '9')
-	{
 		result = 10 * result + get() - '0';
+	if (peek() == '.')
+	{
+		get();
+		int fp = 1;
+		while (peek() >= '0' && peek() <= '9')
+			result += (get() - '0') / std::pow(10, fp++);
 	}
 	return result;
 }
@@ -46,14 +50,14 @@ T MathSolver<T>::factor()
 {
 	if (peek() >= '0' && peek() <= '9')
 		return number();
-	else if (peek() == '(')
+	if (peek() == '(')
 	{
 		get(); // '('
 		T result = expression();
 		get(); // ')'
 		return result;
 	}
-	else if (peek() == '-')
+	if (peek() == '-')
 	{
 		get();
 		return -factor();
@@ -89,12 +93,5 @@ template <typename T>
 T MathSolver<T>::solve(std::string in)
 {
 	expressionToParse = in.data();
-	return expression();
-}
-
-template <typename T>
-T MathSolver<T>::solve(T* location)
-{
-	//expressionToParse = in.data();
 	return expression();
 }

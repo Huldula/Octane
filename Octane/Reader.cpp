@@ -2,7 +2,7 @@
 #include "StringEditor.h"
 #include <fstream>
 #include <iostream>
-#include "typevalues"
+#include "typevalues.cpp"
 #include "MathSolver.h"
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
@@ -74,17 +74,17 @@ std::string Reader::get_as_string(std::string s)
 			type = var.type;
 		std::string val;
 		#define TO_STRING(type) val = std::to_string(*(type*)var.location);
-		SWITCH(TO_STRING, EMPTY);
+		SWITCH(var.type, TO_STRING, EMPTY);
 		s.replace(index, matches[1].length(), val);
 	}
 
 	#define MATH_SOLVE(type) { \
-		MathSolver<type> solver; \
-		s = std::to_string(solver.solve(s)); \
-		break; \
+			MathSolver<type> solver; \
+			s = std::to_string(solver.solve(s)); \
+			break; \
 		}
 
-	SWITCH(MATH_SOLVE, return s;);
+	SWITCH(type, MATH_SOLVE, return s;);
 	return s;
 }
 
