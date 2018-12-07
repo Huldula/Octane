@@ -14,7 +14,7 @@ public:
 	void start();
 	void interpret(const std::string& s);
 
-	std::string get_as_string(std::string s);
+	std::string getAsString(std::string s);
 
 	void numericInit(std::smatch &matches);
 	void numericAssign(std::smatch &matches);
@@ -28,6 +28,7 @@ private:
 	static const std::string simpleDT;
 	static const std::string mathExpression;
 	static const std::regex reIsVar;
+	static const std::regex reIsNumber;
 
 	static const std::regex rePrintString;
 	static const std::regex rePrintVar;

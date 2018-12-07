@@ -1,5 +1,6 @@
 #include "MathSolver.h"
 #include <complex>
+#include <iostream>
 
 template class MathSolver<int>;
 template class MathSolver<long>;
@@ -98,6 +99,7 @@ T MathSolver<T>::expression()
 template <typename T>
 T MathSolver<T>::solve(std::string in)
 {
+	//std::cout << "MathSolver in: " << in << std::endl;
 	expressionToParse = in.data();
 	return expression();
 }

@@ -9,12 +9,13 @@ const std::string Reader::varName("[a-zA-Z_]\\w*");
 const std::string Reader::simpleDT("(int|long|float|double|char|short)");
 //const std::string Reader::mathExpression("(" + Reader::varName + R"(|+|-|\(|\)|\*|/|))");
 const std::regex Reader::reIsVar("[^\\w]?(" + varName + ")[^\\w]?");
+const std::regex Reader::reIsNumber(R"( *?(-|\+)?\d+(?:\.?\d*) *)");
 
 const std::regex Reader::rePrintString("print *?\\(\"(.*)\"\\)");
 const std::regex Reader::rePrintVar("print *?\\((.*)\\)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
 const std::regex Reader::reNumericInit(simpleDT + " *?(" + Reader::varName + R"()(?: *?= *?(.*?))?)");
-const std::regex Reader::reNumericAssign(Reader::varName + R"( *?= *?((?:-|)?\d+(?:\.?\d*)))");
+const std::regex Reader::reNumericAssign(Reader::varName + R"( *?= *?((?:-|\+)?\d+(?:\.?\d*)))");
 
 const std::regex Reader::reString("\".*\"");
 
@@ -35,6 +36,7 @@ void Reader::start()
 
 	while (std::getline(input, line))
 	{
+		line = StringEditor::split(line, "//")[0];
 		StringEditor::trim(line);
 
 		if (line.length() > 0)
@@ -49,7 +51,7 @@ void Reader::interpret(const std::string& s)
 	std::smatch matches;
 
 	if (std::regex_match(s, matches, rePrint)) {
-		std::cout << get_as_string(matches[1]) << std::endl;
+		std::cout << getAsString(matches[1]) << std::endl;
 	}
 	else if (std::regex_match(s, matches, rePrintString)) {
 		printString(matches);
@@ -66,9 +68,11 @@ void Reader::interpret(const std::string& s)
 	}
 }
 
-std::string Reader::get_as_string(std::string s)
+std::string Reader::getAsString(std::string s)
 {
 	if (s._Starts_with("\"") && s.find('"', 1) == s.length() - 1)
+		return s;
+	if (std::regex_match(s, reIsNumber))
 		return s;
 
 	int type = -1;
@@ -85,6 +89,9 @@ std::string Reader::get_as_string(std::string s)
 		s.replace(index, matches[1].length(), val);
 	}
 
+	if (type == -1)
+		type = StringEditor::split(s, " ")[0].find(".") == (unsigned int)-1 ? INT : DOUBLE;
+
 	#define MATH_SOLVE(type) { \
 			MathSolver<type> solver; \
 			s = std::to_string(solver.solve(s)); \
@@ -92,6 +99,7 @@ std::string Reader::get_as_string(std::string s)
 		}
 
 	SWITCH(type, MATH_SOLVE, return s;);
+	//std::cout << s << std::endl;
 	return s;
 }
 
@@ -101,13 +109,13 @@ void Reader::numericInit(std::smatch &matches)
 	if (matches.size() > 3 && matches[3].length() > 0)
 		val = matches[3];
 
+	val = getAsString(val);
 	if (!matches[1].compare("int")) {
-		MathSolver<int> solver;
-		mem.addVar(matches[2], INT, new int(solver.solve(val)));
+		mem.addVar(matches[2], INT, new int(std::stoi(val)));
 	}
 	else if (!matches[1].compare("long")) {
 		MathSolver<long> solver;
-		mem.addVar(matches[2], LONG, new long(solver.solve(val)));
+		mem.addVar(matches[2], LONG, new long(std::stol(val)));
 	}
 	else if (!matches[1].compare("float")) {
 		MathSolver<float> solver;

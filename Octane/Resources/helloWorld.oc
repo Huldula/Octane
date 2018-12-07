@@ -4,7 +4,7 @@ double d
 float f
 int test = 
 int i0 = 122 + 1
-long l0 = -123
+long l0 = -123 + (i0*-1)
 float f0 = -2.4
 double d0 = 3.141234567890
 print("Hello World! My numbers are: ")
@@ -19,7 +19,7 @@ print(-l0)
 print(d0)
 print(f0)
 print(122 + 1)
-print(i0+(2*l0)-d0)
+print(i0+(2*l0)-d0) // sollte -372 sein
 
 i = 5
 i = i+3

@@ -13,13 +13,13 @@ StringEditor::~StringEditor()
 = default;
 
 static void ltrim(std::string &s) {
-	s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](const int ch) {
 		return !std::isspace(ch);
 	}));
 }
 
 static void rtrim(std::string &s) {
-	s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+	s.erase(std::find_if(s.rbegin(), s.rend(), [](const int ch) {
 		return !std::isspace(ch);
 	}).base(), s.end());
 }
@@ -30,7 +30,7 @@ void StringEditor::trim(std::string &s)
 	rtrim(s);
 }
 
-std::vector<std::string> StringEditor::split(std::string s, char c)
+std::vector<std::string> StringEditor::split(const std::string& s, const char c)
 {
 	std::vector<std::string> list;
 
@@ -45,7 +45,7 @@ std::vector<std::string> StringEditor::split(std::string s, char c)
 }
 
 
-std::vector<std::string> StringEditor::split(std::string s, std::string c)
+std::vector<std::string> StringEditor::split(const std::string& s, const std::string& c)
 {
 	std::vector<std::string> list;
 
@@ -54,18 +54,18 @@ std::vector<std::string> StringEditor::split(std::string s, std::string c)
 		next = s.find(c, last);
 		list.push_back(s.substr(last, next - last));
 		last = next + 1;
-	} while (next > 0);
+	} while (next > -1);
 
 	return list;
 }
 
 
-std::string StringEditor::replace(std::string s, std::string toReplace, std::string replacement)
+std::string StringEditor::replace(const std::string& s, const std::string& toReplace, const std::string& replacement)
 {
 	std::vector<std::string> list = StringEditor::split(s, toReplace);
 	std::string out;
 
-	for (int i = 0; i < list.size()-1; i++)
+	for (unsigned int i = 0; i < list.size()-1; i++)
 	{
 		out += list[i] + replacement;
 	}
