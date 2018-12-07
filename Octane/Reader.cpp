@@ -7,12 +7,13 @@
 
 const std::string Reader::varName("[a-zA-Z_]\\w*");
 const std::string Reader::simpleDT("(int|long|float|double|char|short)");
+//const std::string Reader::mathExpression("(" + Reader::varName + R"(|+|-|\(|\)|\*|/|))");
 const std::regex Reader::reIsVar("[^\\w]?(" + varName + ")[^\\w]?");
 
 const std::regex Reader::rePrintString("print *?\\(\"(.*)\"\\)");
 const std::regex Reader::rePrintVar("print *?\\((.*)\\)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
-const std::regex Reader::reNumericInit(simpleDT + " *?(" + Reader::varName + R"()(?: *?= *?((?:-|)\d+(?:\.?\d*)))?)");
+const std::regex Reader::reNumericInit(simpleDT + " *?(" + Reader::varName + R"()(?: *?= *?(.*?))?)");
 const std::regex Reader::reNumericAssign(Reader::varName + R"( *?= *?((?:-|)?\d+(?:\.?\d*)))");
 
 const std::regex Reader::reString("\".*\"");

@@ -48,6 +48,8 @@ T MathSolver<T>::number()
 template <typename T>
 T MathSolver<T>::factor()
 {
+	while (peek() == ' ')
+		get();
 	if (peek() >= '0' && peek() <= '9')
 		return number();
 	if (peek() == '(')
@@ -62,13 +64,15 @@ T MathSolver<T>::factor()
 		get();
 		return -factor();
 	}
-	return 0; // error
+	throw 1000;
 }
 
 template <typename T>
 T MathSolver<T>::term()
 {
 	T result = factor();
+	while (peek() == ' ')
+		get();
 	while (peek() == '*' || peek() == '/')
 		if (get() == '*')
 			result *= factor();
@@ -81,6 +85,8 @@ template <typename T>
 T MathSolver<T>::expression()
 {
 	T result = term();
+	while (peek() == ' ')
+		get();
 	while (peek() == '+' || peek() == '-')
 		if (get() == '+')
 			result += term();

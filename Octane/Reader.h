@@ -26,6 +26,7 @@ private:
 
 	static const std::string varName;
 	static const std::string simpleDT;
+	static const std::string mathExpression;
 	static const std::regex reIsVar;
 
 	static const std::regex rePrintString;
