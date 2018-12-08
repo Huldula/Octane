@@ -17,7 +17,7 @@ const std::regex Reader::rePrintString("print *?\\(\"(.*)\"\\)");
 const std::regex Reader::rePrintVar("print *?\\((.*)\\)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
 const std::regex Reader::reNumericInit(simpleDT + " *?(" + Reader::varName + R"()(?: *?= *?(.*?))?)");
-const std::regex Reader::reNumericAssign(Reader::varName + R"( *?= *?((?:-|\+)?\d+(?:\.?\d*)))");
+const std::regex Reader::reNumericAssign("(" + Reader::varName + R"() *?= *?(.*?))");
 
 const std::regex Reader::reString("\".*\"");
 
@@ -64,6 +64,9 @@ void Reader::interpret(const std::string& s)
 	else if (std::regex_match(s, matches, reNumericInit)) {
 		numericInit(matches);
 	}
+	else if (std::regex_match(s, matches, reNumericAssign)) {
+		numericAssign(matches);
+	}
 	else
 	{
 		std::cout << "WTF is das: " << s << std::endl;
@@ -82,7 +85,7 @@ std::string Reader::getAsString(std::string s)
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		const int index = s.find(matches[1]);
-		const Object var = mem.getVar(matches[1]);
+		const Object& var = mem.getVar(matches[1]);
 		if (type == -1)
 			type = var.type;
 		std::string val;
@@ -121,11 +124,11 @@ void Reader::numericInit(std::smatch &matches)
 	}
 	else if (!matches[1].compare("float")) {
 		MathSolver<float> solver;
-		mem.addVar(matches[2], FLOAT, new float(solver.solve(val)));
+		mem.addVar(matches[2], FLOAT, new float(std::stof(val)));
 	}
 	else if (!matches[1].compare("double")) {
 		MathSolver<double> solver;
-		mem.addVar(matches[2], DOUBLE, new double(solver.solve(val)));
+		mem.addVar(matches[2], DOUBLE, new double(std::stod(val)));
 	}
 	else if (!matches[1].compare("char")) {
 		MathSolver<char> solver;
@@ -139,23 +142,26 @@ void Reader::numericInit(std::smatch &matches)
 
 void Reader::numericAssign(std::smatch &matches)
 {
+	const std::string val = getAsString(matches[2]);
+	const Object& obj = mem.getVar(matches[1]);
 
-	//#define TO_STRING(type) val = std::to_string(*(type*)var.location);
-	//SWITCH(mem.getType(matches[1]), TO_STRING, EMPTY);
-
-
-	//if (!matches[1].compare("int")) {
-	//	mem.addVar(matches[2], INT, new int(std::stoi(val)));
-	//}
-	//else if (!matches[1].compare("long")) {
-	//	mem.addVar(matches[2], LONG, new long(std::stol(val)));
-	//}
-	//else if (!matches[1].compare("float")) {
-	//	mem.addVar(matches[2], FLOAT, new float(std::stof(val)));
-	//}
-	//else if (!matches[1].compare("double")) {
-	//	mem.addVar(matches[2], DOUBLE, new double(std::stod(val)));
-	//}
+	// TODO char and short (if keeping them)
+	switch (obj.type)
+	{
+	case INT:
+		*(int*)mem.getLocation(matches[1]) = std::stoi(val);
+		break;
+	case LONG:
+		*(long*)mem.getLocation(matches[1]) = std::stol(val);
+		break;
+	case FLOAT:
+		*(float*)mem.getLocation(matches[1]) = std::stof(val);
+		break;
+	case DOUBLE:
+		*(double*)mem.getLocation(matches[1]) = std::stod(val);
+		break;
+	default: ;
+	}
 }
 
 void Reader::printVar(std::smatch &matches)

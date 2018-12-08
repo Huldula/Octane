@@ -21,6 +21,6 @@ print(f0)
 print(122 + 1)
 print(i0+(2*l0)-d0) // sollte -372 sein
 
-i = 5
+i = i0+(2*l0)-d0
 i = i+3
 print(i)
