@@ -126,6 +126,7 @@
     <ClCompile Include="StringEditor.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="typevalues.cpp" />
+    <ClCompile Include="VariableHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MathSolver.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Reader.h" />
     <ClInclude Include="StringEditor.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="VariableHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

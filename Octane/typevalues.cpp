@@ -30,3 +30,5 @@
 	}
 
 #define EMPTY break;
+
+#define VAR_NAME std::string("[a-zA-Z_]\\w*")

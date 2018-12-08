@@ -18,6 +18,9 @@
     <Filter Include="Quelldateien\Memory">
       <UniqueIdentifier>{1643d260-c6b2-4fad-8893-f47d7a71aa5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Maths">
+      <UniqueIdentifier>{8005168b-5a68-4412-a646-6bd3202d06be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -32,9 +35,6 @@
     <ClCompile Include="StringEditor.cpp">
       <Filter>Quelldateien\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="MathSolver.cpp">
-      <Filter>Quelldateien\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Memory.cpp">
       <Filter>Quelldateien\Memory</Filter>
     </ClCompile>
@@ -43,6 +43,12 @@
     </ClCompile>
     <ClCompile Include="typevalues.cpp">
       <Filter>Quelldateien\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="MathSolver.cpp">
+      <Filter>Quelldateien\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableHandler.cpp">
+      <Filter>Quelldateien\Maths</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,14 +61,17 @@
     <ClInclude Include="StringEditor.h">
       <Filter>Quelldateien\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="MathSolver.h">
-      <Filter>Quelldateien\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Quelldateien\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Quelldateien\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="MathSolver.h">
+      <Filter>Quelldateien\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableHandler.h">
+      <Filter>Quelldateien\Maths</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

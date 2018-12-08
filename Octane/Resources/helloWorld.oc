@@ -7,7 +7,7 @@ int i0 = 122 + 1
 long l0 = -123 + (i0*-1)
 float f0 = -2.4
 double d0 = 3.141234567890
-print("Hello World! My numbers are: ")
+//print("Hello World! My numbers are: ")
 
 print(i)
 print(l)
@@ -24,3 +24,5 @@ print(i0+(2*l0)-d0) // sollte -372 sein
 i = i0+(2*l0)-d0
 i = i+3
 print(i)
+double itd = i + 0.5
+print(itd)
