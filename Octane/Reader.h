@@ -23,8 +23,7 @@ private:
 	static const std::regex rePrint;
 	static const std::regex reNumericInit;
 	static const std::regex reNumericAssign;
-
-	static const std::regex reString;
+	static const std::regex reFuncInit;
 
 };
 

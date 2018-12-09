@@ -13,8 +13,7 @@ const std::string Reader::simpleDT("(int|long|float|double|char|short)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
 const std::regex Reader::reNumericInit(simpleDT + " *?(" + VAR_NAME + R"()(?: *?= *?(.*?))?)");
 const std::regex Reader::reNumericAssign("(" + VAR_NAME + R"() *?= *?(.*?))");
-
-const std::regex Reader::reString("\".*\"");
+const std::regex Reader::reFuncInit("(" + VAR_NAME + ") +?(" + VAR_NAME + ") *?() *?");
 
 
 Reader::Reader()
