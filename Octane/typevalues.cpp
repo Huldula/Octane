@@ -5,28 +5,22 @@
 #define BOOL 4
 #define CHAR 5
 #define SHORT 6
+#define FUNC 7
 
 #define SWITCH(varName, command, other) switch(varName) { \
 	case INT: \
-		command(int); \
-		break; \
+		command(int) \
 	case LONG: \
-		command(long); \
-		break; \
+		command(long) \
 	case FLOAT: \
-		command(float); \
-		break; \
+		command(float) \
 	case DOUBLE: \
-		command(double); \
-		break; \
+		command(double) \
 	case CHAR: \
-		command(char); \
-		break; \
+		command(char) \
 	case SHORT: \
-		command(short); \
-		break; \
-	default: \
-		other \
+		command(short) \
+	other \
 	}
 
 #define EMPTY break;

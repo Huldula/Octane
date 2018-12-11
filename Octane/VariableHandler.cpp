@@ -3,9 +3,12 @@
 #include "typevalues.cpp"
 #include "StringEditor.h"
 #include "MathSolver.h"
+#include <iostream>
 
 
-const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + ")[^\\w]?");
+//const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + ")[^\\w]?");
+const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + ") *?(?:\\(\\))?[^\\w]?");
+//const std::regex VariableHandler::reIsFuncCall("[^\\w]?(" + VAR_NAME + R"() *?\(\)[^\w]?)");
 const std::regex VariableHandler::reIsNumber(R"( *?(-|\+)?\d+(?:\.?\d*) *)");
 
 VariableHandler::VariableHandler()
@@ -32,8 +35,16 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 		if (type == -1)
 			type = var.type;
 		std::string val;
-#define TO_STRING(type) val = std::to_string(*(type*)var.location);
-		SWITCH(var.type, TO_STRING, EMPTY);
+#define TO_STRING(type) val = std::to_string(*(type*)var.location); break;
+#define FUNC_CALL case FUNC: {\
+			Reader r(mem); \
+			std::vector<std::string> lines = *(std::vector<std::string>*)var.location; \
+			std::cout << "funccall oda so in swicth" << std::endl; \
+			for (unsigned int i = 0; i < lines.size(); i++) { \
+				r.interpret(lines[i]); \
+			}} \
+			default: break;
+		SWITCH(var.type, TO_STRING, FUNC_CALL);
 		s.replace(index, matches[1].length(), val);
 	}
 
@@ -46,7 +57,7 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 			break; \
 		}
 
-	SWITCH(type, MATH_SOLVE, return s;);
+	SWITCH(type, MATH_SOLVE, );
 	//std::cout << s << std::endl;
 	return s;
 }
@@ -106,4 +117,11 @@ void VariableHandler::numericAssign(Memory& mem, std::smatch &matches)
 		break;
 	default:;
 	}
+}
+
+
+
+void VariableHandler::funcInit(Memory& mem, std::smatch &matches, std::vector<std::string> lines)
+{
+	mem.addVar(matches[2], FUNC, new std::vector<std::string>(lines));
 }

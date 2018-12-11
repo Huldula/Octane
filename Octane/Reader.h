@@ -10,10 +10,10 @@ class Reader
 {
 public:
 	Reader();
+	Reader(Memory& mem);
 	~Reader();
 	void start();
 	void interpret(const std::string& s);
-
 private:
 	Memory mem;
 
@@ -25,5 +25,8 @@ private:
 	static const std::regex reNumericAssign;
 	static const std::regex reFuncInit;
 
+	bool interpreting = true;
+	std::smatch tempMatches;
+	std::vector<std::string> tempLines;
 };
 

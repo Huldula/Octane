@@ -1,6 +1,6 @@
 #include "Object.h"
 #include "typevalues.cpp"
-
+#include <string>
 
 
 Object::Object() : type(-1), location(nullptr)
@@ -32,6 +32,8 @@ int Object::size() const
 		return 1;
 	case SHORT:
 		return 2;
+	case FUNC:
+		return sizeof(std::string);
 	default:
 		return 0;
 	}

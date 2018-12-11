@@ -26,3 +26,10 @@ i = i+3
 print(i)
 double itd = i + 0.5
 print(itd)
+
+int printIs() {
+	print(i)
+	print(i0)
+}
+
+printIs()

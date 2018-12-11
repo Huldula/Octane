@@ -11,9 +11,11 @@ public:
 	static std::string getAsString(Memory& mem, std::string s, int type);
 	static void numericInit(Memory& mem, std::smatch &matches);
 	static void numericAssign(Memory& mem, std::smatch &matches);
+	static void funcInit(Memory& mem, std::smatch &matches, std::vector<std::string> lines);
 
 private:
 	static const std::regex reIsVar;
+	//static const std::regex reIsFuncCall;
 	static const std::regex reIsNumber;
 };
 
