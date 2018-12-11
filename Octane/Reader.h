@@ -26,7 +26,7 @@ private:
 	static const std::regex reFuncInit;
 
 	bool interpreting = true;
-	std::smatch tempMatches;
+	std::string tempName;
 	std::vector<std::string> tempLines;
 };
 

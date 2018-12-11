@@ -10,16 +10,22 @@
 #define SWITCH(varName, command, other) switch(varName) { \
 	case INT: \
 		command(int) \
+		break; \
 	case LONG: \
 		command(long) \
+		break; \
 	case FLOAT: \
 		command(float) \
+		break; \
 	case DOUBLE: \
 		command(double) \
+		break; \
 	case CHAR: \
 		command(char) \
+		break; \
 	case SHORT: \
 		command(short) \
+		break; \
 	other \
 	}
 

@@ -43,7 +43,7 @@ void Reader::start()
 				interpret(line);
 			else if (line._Equal("}"))
 			{
-				VariableHandler::funcInit(mem, tempMatches, tempLines);
+				VariableHandler::funcInit(mem, tempName, tempLines);
 				interpreting = true;
 			}
 			else
@@ -71,10 +71,11 @@ void Reader::interpret(const std::string& s)
 		interpreting = false;
 		std::cout << "func init" << std::endl;
 		//VariableHandler::funcInit(mem, matches);
-		tempMatches = matches;
+		tempName = matches[2];
 	}
 	else
 	{
 		std::cout << "WTF is das: " << s << std::endl;
+		VariableHandler::getAsString(mem, s, -1);
 	}
 }

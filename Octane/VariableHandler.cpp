@@ -7,7 +7,8 @@
 
 
 //const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + ")[^\\w]?");
-const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + ") *?(?:\\(\\))?[^\\w]?");
+//const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + R"() *?(?:\(\))?[^\w]?)");
+const std::regex VariableHandler::reIsVar("(" + VAR_NAME + ")");
 //const std::regex VariableHandler::reIsFuncCall("[^\\w]?(" + VAR_NAME + R"() *?\(\)[^\w]?)");
 const std::regex VariableHandler::reIsNumber(R"( *?(-|\+)?\d+(?:\.?\d*) *)");
 
@@ -35,11 +36,10 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 		if (type == -1)
 			type = var.type;
 		std::string val;
-#define TO_STRING(type) val = std::to_string(*(type*)var.location); break;
+#define TO_STRING(type) val = std::to_string(*(type*)var.location);
 #define FUNC_CALL case FUNC: {\
 			Reader r(mem); \
 			std::vector<std::string> lines = *(std::vector<std::string>*)var.location; \
-			std::cout << "funccall oda so in swicth" << std::endl; \
 			for (unsigned int i = 0; i < lines.size(); i++) { \
 				r.interpret(lines[i]); \
 			}} \
@@ -54,7 +54,6 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 #define MATH_SOLVE(type) { \
 			MathSolver<type> solver; \
 			s = std::to_string(solver.solve(s)); \
-			break; \
 		}
 
 	SWITCH(type, MATH_SOLVE, );
@@ -68,7 +67,7 @@ void VariableHandler::numericInit(Memory& mem, std::smatch &matches)
 	std::string val = "0";
 	if (matches.size() > 3 && matches[3].length() > 0)
 		val = matches[3];
-
+	
 	if (!matches[1].compare("int")) {
 		mem.addVar(matches[2], INT, new int(std::stoi(VariableHandler::getAsString(mem, val, INT))));
 	}
@@ -121,7 +120,7 @@ void VariableHandler::numericAssign(Memory& mem, std::smatch &matches)
 
 
 
-void VariableHandler::funcInit(Memory& mem, std::smatch &matches, std::vector<std::string> lines)
+void VariableHandler::funcInit(Memory& mem, const std::string& name, const std::vector<std::string>& lines)
 {
-	mem.addVar(matches[2], FUNC, new std::vector<std::string>(lines));
+	mem.addVar(name, FUNC, new std::vector<std::string>(lines));
 }
