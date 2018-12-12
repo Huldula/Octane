@@ -13,7 +13,8 @@ const std::string Reader::simpleDT("(int|long|float|double|char|short)");
 const std::regex Reader::rePrint("print *?\\((.*)\\)");
 const std::regex Reader::reNumericInit(simpleDT + " *?(" + VAR_NAME + R"()(?: *?= *?(.*?))?)");
 const std::regex Reader::reNumericAssign("(" + VAR_NAME + R"() *?= *?(.*?))");
-const std::regex Reader::reFuncInit("(" + VAR_NAME + ") +?(" + VAR_NAME + R"() *?\(\) *?\{?)");
+const std::regex Reader::reFuncInit("(" + VAR_NAME + ") +?(" + VAR_NAME + R"() *?\((.*)\) *?\{?)");
+const std::regex Reader::reFuncCall("(" + VAR_NAME + ") *?\\(.*\\)");
 
 
 Reader::Reader()
@@ -43,7 +44,7 @@ void Reader::start()
 				interpret(line);
 			else if (line._Equal("}"))
 			{
-				VariableHandler::funcInit(mem, tempName, tempLines);
+				VariableHandler::funcInit(mem, tempName, tempArgs, tempLines);
 				interpreting = true;
 			}
 			else
@@ -72,10 +73,13 @@ void Reader::interpret(const std::string& s)
 		std::cout << "func init" << std::endl;
 		//VariableHandler::funcInit(mem, matches);
 		tempName = matches[2];
+		tempArgs = matches[3];
+	}
+	else if (std::regex_match(s, matches, reFuncCall)) {
+		VariableHandler::getAsString(mem, s, -1);
 	}
 	else
 	{
 		std::cout << "WTF is das: " << s << std::endl;
-		VariableHandler::getAsString(mem, s, -1);
 	}
 }

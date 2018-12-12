@@ -14,8 +14,7 @@ public:
 	~Reader();
 	void start();
 	void interpret(const std::string& s);
-private:
-	Memory mem;
+
 
 	static const std::string simpleDT;
 	static const std::string mathExpression;
@@ -24,9 +23,13 @@ private:
 	static const std::regex reNumericInit;
 	static const std::regex reNumericAssign;
 	static const std::regex reFuncInit;
+	static const std::regex reFuncCall;
+private:
+	Memory mem;
 
 	bool interpreting = true;
 	std::string tempName;
+	std::string tempArgs;
 	std::vector<std::string> tempLines;
 };
 

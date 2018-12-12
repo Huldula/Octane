@@ -4,6 +4,7 @@
 #include "StringEditor.h"
 #include "MathSolver.h"
 #include <iostream>
+#include <regex>
 
 
 //const std::regex VariableHandler::reIsVar("[^\\w]?(" + VAR_NAME + ")[^\\w]?");
@@ -32,6 +33,10 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		const int index = s.find(matches[1]);
+		if (!matches[1].compare("args"))
+		{
+			std::cout << "sad" << std::endl;
+		}
 		const Object& var = mem.getVar(matches[1]);
 		if (type == -1)
 			type = var.type;
@@ -62,35 +67,41 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 }
 
 
+void VariableHandler::numericInit(Memory& mem, const std::string& dataType, 
+	const std::string& name, const std::string& val)
+{
+	if (dataType._Equal("int")) {
+		mem.addVar(name, INT, new int(std::stoi(VariableHandler::getAsString(mem, val, INT))));
+	}
+	else if (dataType._Equal("long")) {
+		MathSolver<long> solver;
+		mem.addVar(name, LONG, new long(std::stol(VariableHandler::getAsString(mem, val, LONG))));
+	}
+	else if (dataType._Equal("float")) {
+		MathSolver<float> solver;
+		mem.addVar(name, FLOAT, new float(std::stof(VariableHandler::getAsString(mem, val, FLOAT))));
+	}
+	else if (dataType._Equal("double")) {
+		MathSolver<double> solver;
+		mem.addVar(name, DOUBLE, new double(std::stod(VariableHandler::getAsString(mem, val, DOUBLE))));
+	}
+	else if (dataType._Equal("char")) {
+		MathSolver<char> solver;
+		mem.addVar(name, CHAR, new char(solver.solve(VariableHandler::getAsString(mem, val, CHAR))));
+	}
+	else if (dataType._Equal("short")) {
+		MathSolver<short> solver;
+		mem.addVar(name, SHORT, new short(solver.solve(VariableHandler::getAsString(mem, val, SHORT))));
+	}
+}
+
 void VariableHandler::numericInit(Memory& mem, std::smatch &matches)
 {
 	std::string val = "0";
 	if (matches.size() > 3 && matches[3].length() > 0)
 		val = matches[3];
 	
-	if (!matches[1].compare("int")) {
-		mem.addVar(matches[2], INT, new int(std::stoi(VariableHandler::getAsString(mem, val, INT))));
-	}
-	else if (!matches[1].compare("long")) {
-		MathSolver<long> solver;
-		mem.addVar(matches[2], LONG, new long(std::stol(VariableHandler::getAsString(mem, val, LONG))));
-	}
-	else if (!matches[1].compare("float")) {
-		MathSolver<float> solver;
-		mem.addVar(matches[2], FLOAT, new float(std::stof(VariableHandler::getAsString(mem, val, FLOAT))));
-	}
-	else if (!matches[1].compare("double")) {
-		MathSolver<double> solver;
-		mem.addVar(matches[2], DOUBLE, new double(std::stod(VariableHandler::getAsString(mem, val, DOUBLE))));
-	}
-	else if (!matches[1].compare("char")) {
-		MathSolver<char> solver;
-		mem.addVar(matches[2], CHAR, new char(solver.solve(VariableHandler::getAsString(mem, val, CHAR))));
-	}
-	else if (!matches[1].compare("short")) {
-		MathSolver<short> solver;
-		mem.addVar(matches[2], SHORT, new short(solver.solve(VariableHandler::getAsString(mem, val, SHORT))));
-	}
+	numericInit(mem, matches[1], matches[2], val);
 }
 
 
@@ -120,7 +131,27 @@ void VariableHandler::numericAssign(Memory& mem, std::smatch &matches)
 
 
 
-void VariableHandler::funcInit(Memory& mem, const std::string& name, const std::vector<std::string>& lines)
+void VariableHandler::funcInit(Memory& mem, const std::string& name, const std::string& args,
+	std::vector<std::string> lines)
 {
-	mem.addVar(name, FUNC, new std::vector<std::string>(lines));
+	std::vector<std::string> varInits = StringEditor::split(args, ',');
+	for (auto& varInit : varInits)
+	{
+		StringEditor::trim(varInit);
+		std::smatch matches;
+		if (std::regex_match(varInit, matches, Reader::reNumericInit))
+		{
+			numericInit(mem, matches[1], name + std::string(matches[2]), "0");
+		}
+		else
+		{
+			std::cout << "Arg is wrong or so" << std::endl;
+		}
+	}
+	std::vector<std::string>* out = new std::vector<std::string>();
+	for (const auto& line : lines)
+	{
+		out->push_back(line);
+	}
+	mem.addVar(name, FUNC, out);
 }

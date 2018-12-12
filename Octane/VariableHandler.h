@@ -9,9 +9,12 @@ public:
 	VariableHandler();
 	~VariableHandler();
 	static std::string getAsString(Memory& mem, std::string s, int type);
+	static void numericInit(Memory& mem, const std::string& dataType, 
+		const std::string& name, const std::string& val);
 	static void numericInit(Memory& mem, std::smatch &matches);
 	static void numericAssign(Memory& mem, std::smatch &matches);
-	static void funcInit(Memory& mem, const std::string& name, const std::vector<std::string>& lines);
+	static void funcInit(Memory& mem, const std::string& name, const std::string& args, 
+		std::vector<std::string> lines);
 
 private:
 	static const std::regex reIsVar;
