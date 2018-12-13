@@ -24,6 +24,12 @@ VariableHandler::~VariableHandler()
 
 std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 {
+	return VariableHandler::getAsString(mem, s, type, "");
+}
+
+
+std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, const std::string& scopeName)
+{
 	//if (s._Starts_with("\"") && s.find('"', 1) == s.length() - 1)
 	//	return s;
 	if (std::regex_match(s, reIsNumber))
@@ -37,13 +43,15 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 		{
 			std::cout << "sad" << std::endl;
 		}
-		const Object& var = mem.getVar(matches[1]);
+		const Object& var = mem.getVar(scopeName + std::string(matches[1]));
+		std::cout << "var name das was ich suche das ist hier langer text   " << var.location << std::endl;
+		std::cout << "var name das was ich suche das ist hier langer text   " << scopeName + std::string(matches[1]) << std::endl;
 		if (type == -1)
 			type = var.type;
 		std::string val;
 #define TO_STRING(type) val = std::to_string(*(type*)var.location);
 #define FUNC_CALL case FUNC: {\
-			Reader r(mem); \
+			Reader r(mem, matches[1]); \
 			std::vector<std::string> lines = *(std::vector<std::string>*)var.location; \
 			for (unsigned int i = 0; i < lines.size(); i++) { \
 				r.interpret(lines[i]); \
@@ -70,6 +78,7 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type)
 void VariableHandler::numericInit(Memory& mem, const std::string& dataType, 
 	const std::string& name, const std::string& val)
 {
+	std::cout << name << std::endl;
 	if (dataType._Equal("int")) {
 		mem.addVar(name, INT, new int(std::stoi(VariableHandler::getAsString(mem, val, INT))));
 	}
@@ -95,38 +104,44 @@ void VariableHandler::numericInit(Memory& mem, const std::string& dataType,
 	}
 }
 
-void VariableHandler::numericInit(Memory& mem, std::smatch &matches)
+//TODO check if scopeName is useless
+void VariableHandler::numericInit(Memory& mem, std::smatch &matches, const std::string& scopeName)
 {
 	std::string val = "0";
 	if (matches.size() > 3 && matches[3].length() > 0)
 		val = matches[3];
 	
-	numericInit(mem, matches[1], matches[2], val);
+	numericInit(mem, matches[1], scopeName + std::string(matches[2]), val);
 }
 
 
-void VariableHandler::numericAssign(Memory& mem, std::smatch &matches)
+void VariableHandler::numericAssign(Memory& mem, const std::string& name, const std::string& value)
 {
-	const Object& obj = mem.getVar(matches[1]);
-	const std::string val = VariableHandler::getAsString(mem, matches[2], obj.type);
+	const Object& obj = mem.getVar(name);
+	const std::string val = VariableHandler::getAsString(mem, value, obj.type);
 
 	// TODO char and short (if keeping them)
 	switch (obj.type)
 	{
 	case INT:
-		*(int*)mem.getLocation(matches[1]) = std::stoi(val);
+		*(int*)mem.getLocation(name) = std::stoi(val);
 		break;
 	case LONG:
-		*(long*)mem.getLocation(matches[1]) = std::stol(val);
+		*(long*)mem.getLocation(name) = std::stol(val);
 		break;
 	case FLOAT:
-		*(float*)mem.getLocation(matches[1]) = std::stof(val);
+		*(float*)mem.getLocation(name) = std::stof(val);
 		break;
 	case DOUBLE:
-		*(double*)mem.getLocation(matches[1]) = std::stod(val);
+		*(double*)mem.getLocation(name) = std::stod(val);
 		break;
 	default:;
 	}
+}
+
+void VariableHandler::numericAssign(Memory& mem, std::smatch &matches)
+{
+	numericAssign(mem, matches[1], matches[2]);
 }
 
 
@@ -141,7 +156,7 @@ void VariableHandler::funcInit(Memory& mem, const std::string& name, const std::
 		std::smatch matches;
 		if (std::regex_match(varInit, matches, Reader::reNumericInit))
 		{
-			numericInit(mem, matches[1], name + std::string(matches[2]), "0");
+			numericInit(mem, matches[1], name + std::string(".") + std::string(matches[2]), "0");
 		}
 		else
 		{

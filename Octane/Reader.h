@@ -11,6 +11,7 @@ class Reader
 public:
 	Reader();
 	Reader(Memory& mem);
+	Reader(Memory& mem, std::string scopeName);
 	~Reader();
 	void start();
 	void interpret(const std::string& s);
@@ -26,6 +27,7 @@ public:
 	static const std::regex reFuncCall;
 private:
 	Memory mem;
+	std::string scopeName;
 
 	bool interpreting = true;
 	std::string tempName;

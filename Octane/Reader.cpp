@@ -4,6 +4,7 @@
 #include "StringEditor.h"
 #include <fstream>
 #include <iostream>
+#include <utility>
 #include "typevalues.cpp"
 #include "VariableHandler.h"
 
@@ -20,7 +21,10 @@ const std::regex Reader::reFuncCall("(" + VAR_NAME + ") *?\\(.*\\)");
 Reader::Reader()
 = default;
 
-Reader::Reader(Memory& mem) : mem(mem)
+Reader::Reader(Memory& mem) : mem(mem), scopeName("")
+{}
+
+Reader::Reader(Memory& mem, std::string scopeName) : mem(mem), scopeName(scopeName)
 {}
 
 Reader::~Reader()
@@ -63,7 +67,7 @@ void Reader::interpret(const std::string& s)
 		std::cout << VariableHandler::getAsString(mem, matches[1], -1) << std::endl;
 	}
 	else if (std::regex_match(s, matches, reNumericInit)) {
-		VariableHandler::numericInit(mem, matches);
+		VariableHandler::numericInit(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reNumericAssign)) {
 		VariableHandler::numericAssign(mem, matches);
