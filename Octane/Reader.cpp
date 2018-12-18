@@ -50,6 +50,7 @@ void Reader::start()
 			{
 				VariableHandler::funcInit(mem, tempName, tempArgs, tempLines);
 				interpreting = true;
+				tempLines.clear();
 			}
 			else
 				tempLines.push_back(line);

@@ -39,13 +39,8 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, c
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		const int index = s.find(matches[1]);
-		if (!matches[1].compare("args"))
-		{
-			std::cout << "sad" << std::endl;
-		}
 		const Object& var = mem.getVar(scopeName + std::string(matches[1]));
-		std::cout << "var name das was ich suche das ist hier langer text   " << var.location << std::endl;
-		std::cout << "var name das was ich suche das ist hier langer text   " << scopeName + std::string(matches[1]) << std::endl;
+		//std::cout << "var name das was ich suche das ist hier langer text   " << scopeName + std::string(matches[1]) << std::endl;
 		if (type == -1)
 			type = var.type;
 		std::string val;

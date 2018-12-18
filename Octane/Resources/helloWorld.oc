@@ -34,10 +34,16 @@ int printIs() {
 
 printIs()
 
-int args(int i) {
+int args(int h) {
+	print(h)
+}
+
+args(15)
+
+int argsi(int i) {
 	print(i)
 }
 
-args(5)
+argsi(5)
 
 print(i)
