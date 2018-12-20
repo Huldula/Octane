@@ -9,5 +9,6 @@ public:
 	int type;
 	void* location;
 	int size() const;
+	bool exists() const;
 };
 

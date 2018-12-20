@@ -38,3 +38,8 @@ int Object::size() const
 		return 0;
 	}
 }
+
+bool Object::exists() const
+{
+	return type != -1;
+}

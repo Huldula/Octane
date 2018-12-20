@@ -48,7 +48,7 @@ void Reader::start()
 				interpret(line);
 			else if (line._Equal("}"))
 			{
-				VariableHandler::funcInit(mem, tempName, tempArgs, tempLines);
+				VariableHandler::funcInit(mem, tempName, tempArgs, tempLines, scopeName);
 				interpreting = true;
 				tempLines.clear();
 			}
@@ -61,27 +61,29 @@ void Reader::start()
 void Reader::interpret(const std::string& s)
 {
 	std::cout << s << std::endl;
+	//std::cout << "scopeName Reader::interpret  " << scopeName << std::endl;
 
 	std::smatch matches;
 
 	if (std::regex_match(s, matches, rePrint)) {
-		std::cout << VariableHandler::getAsString(mem, matches[1], -1) << std::endl;
+		std::cout << VariableHandler::getAsString(mem, matches[1], -1, scopeName) << std::endl;
 	}
 	else if (std::regex_match(s, matches, reNumericInit)) {
 		VariableHandler::numericInit(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reNumericAssign)) {
-		VariableHandler::numericAssign(mem, matches);
+		VariableHandler::numericAssign(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reFuncInit)) {
 		interpreting = false;
-		std::cout << "func init" << std::endl;
+		//std::cout << "func init" << std::endl;
 		//VariableHandler::funcInit(mem, matches);
 		tempName = matches[2];
 		tempArgs = matches[3];
 	}
 	else if (std::regex_match(s, matches, reFuncCall)) {
-		VariableHandler::getAsString(mem, s, -1);
+		//std::cout << "funccall   " << scopeName << std::endl;
+		VariableHandler::getAsString(mem, s, -1, scopeName);
 	}
 	else
 	{
