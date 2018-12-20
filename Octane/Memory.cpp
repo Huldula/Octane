@@ -11,19 +11,26 @@ void Memory::addVar(const std::string& name, const Object& o)
 	nameLocations[name] = o;
 }
 
-// TODO mach so pointer wieder nicht template
-//template<typename T>
-//void Memory::addVar(const std::string& name, const int type, T value)
 void Memory::addVar(const std::string& name, const int type, void* value)
 {
 	addVar(name, Object(type, value));
 }
 
-void Memory::deleteVar(const std::string& name)
+void Memory::addVar(const std::string& name, const Object& o, const std::string& scopeName)
+{
+	nameLocations[scopeName + "." + name] = o;
+}
+
+void Memory::addVar(const std::string& name, const int type, void* value, const std::string& scopeName)
+{
+	addVar(name, Object(type, value), scopeName);
+}
+
+void Memory::deleteVar(const std::string& name, const std::string& scopeName)
 {
 	// TODO make faster if possible
-	for (int i = 0; i < nameLocations[name].size(); i++)
-		delete((char*)nameLocations[name].location + i);
+	for (int i = 0; i < getDeepestVar(name, scopeName).size(); i++)
+		delete((char*)getDeepestVar(name, scopeName).location + i);
 	nameLocations.erase(name);
 }
 
@@ -32,28 +39,30 @@ Object Memory::getVar(const std::string& name)
 	return nameLocations[name];
 }
 
-
-void* Memory::getLocation(const std::string& name)
+Object Memory::getVar(const std::string& name, const std::string& scopeName)
 {
-	return nameLocations[name].location;
+	return getDeepestVar(name, scopeName);
 }
 
-template<typename T>
-T* Memory::getLocation(const std::string& name)
+void* Memory::getLocation(const std::string& name, const std::string& scopeName)
 {
-	return (T*)nameLocations[name].location;
+	return getDeepestVar(name, scopeName).location;
 }
 
 
-int Memory::getType(const std::string& name)
+int Memory::getType(const std::string& name, const std::string& scopeName)
 {
-	return nameLocations[name].type;
+	return getDeepestVar(name, scopeName).type;
 }
 
-//template void Memory::addVar<int>(const std::string& name, int type, int value);
-//template void Memory::addVar<long>(const std::string& name, int type, long value);
-//template void Memory::addVar<float>(const std::string& name, int type, float value);
-//template void Memory::addVar<double>(const std::string& name, int type, double value);
-//template void Memory::addVar<short>(const std::string& name, int type, short value);
-//template void Memory::addVar<bool>(const std::string& name, int type, bool value);
-//template void Memory::addVar<char>(const std::string& name, int type, char value);
+Object Memory::getDeepestVar(const std::string& name, std::string scopeName)
+{
+	Object var = getVar(scopeName + "." + name);
+	while (!var.exists())
+	{
+		const int snindex = scopeName.rfind('.');
+		scopeName = scopeName.substr(0, snindex);
+		var = getVar(scopeName + "." + name);
+	}
+	return var;
+}

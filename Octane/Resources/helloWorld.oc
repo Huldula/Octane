@@ -11,6 +11,8 @@ double d0 = 3.141234567890
 
 print(i)
 print(l)
+l = 2
+print(l)
 print(d)
 print(f)
 print(test)

@@ -120,26 +120,27 @@ void VariableHandler::numericInit(Memory& mem, std::smatch &matches, const std::
 void VariableHandler::numericAssign(Memory& mem, const std::string& name, 
 	const std::string& value, const std::string& scopeName)
 {
-	const Object& obj = mem.getVar(name);
+	const Object& obj = mem.getVar(name, scopeName);
 	const std::string val = VariableHandler::getAsString(mem, value, obj.type);
 
 	// TODO char and short (if keeping them)
 	switch (obj.type)
 	{
 	case INT:
-		*(int*)mem.getLocation(name) = std::stoi(val);
+		*(int*)mem.getLocation(name, scopeName) = std::stoi(val);
 		break;
 	case LONG:
-		*(long*)mem.getLocation(name) = std::stol(val);
+		*(long*)mem.getLocation(name, scopeName) = std::stol(val);
 		break;
 	case FLOAT:
-		*(float*)mem.getLocation(name) = std::stof(val);
+		*(float*)mem.getLocation(name, scopeName) = std::stof(val);
 		break;
 	case DOUBLE:
-		*(double*)mem.getLocation(name) = std::stod(val);
+		*(double*)mem.getLocation(name, scopeName) = std::stod(val);
 		break;
 	default:;
 	}
+
 }
 
 void VariableHandler::numericAssign(Memory& mem, std::smatch &matches, const std::string& scopeName)
