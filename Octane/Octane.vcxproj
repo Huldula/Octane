@@ -120,21 +120,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathSolver.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Reader.cpp" />
+    <ClCompile Include="SimpleDTs.cpp" />
     <ClCompile Include="StringEditor.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="typevalues.cpp" />
     <ClCompile Include="VariableHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="MathSolver.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Reader.h" />
+    <ClInclude Include="SimpleDTs.h" />
     <ClInclude Include="StringEditor.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="VariableHandler.h" />

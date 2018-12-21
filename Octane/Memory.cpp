@@ -9,6 +9,7 @@ Memory::Memory()
 void Memory::addVar(const std::string& name, const Object& o)
 {
 	nameLocations[name] = o;
+	//std::cout << "added Variable: " << name << std::endl;
 }
 
 void Memory::addVar(const std::string& name, const int type, void* value)
@@ -36,6 +37,7 @@ void Memory::deleteVar(const std::string& name, const std::string& scopeName)
 
 Object Memory::getVar(const std::string& name)
 {
+	//std::cout << "about to return " << name << std::endl;
 	return nameLocations[name];
 }
 

@@ -21,6 +21,9 @@
     <Filter Include="Quelldateien\Maths">
       <UniqueIdentifier>{8005168b-5a68-4412-a646-6bd3202d06be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Memory\Objecets">
+      <UniqueIdentifier>{a35a1b41-0716-4712-b872-894aa63b060d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -50,6 +53,12 @@
     <ClCompile Include="VariableHandler.cpp">
       <Filter>Quelldateien\Maths</Filter>
     </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Quelldateien\Memory\Objecets</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDTs.cpp">
+      <Filter>Quelldateien\Memory\Objecets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Reader.h">
@@ -72,6 +81,12 @@
     </ClInclude>
     <ClInclude Include="VariableHandler.h">
       <Filter>Quelldateien\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Quelldateien\Memory\Objecets</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDTs.h">
+      <Filter>Quelldateien\Memory\Objecets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

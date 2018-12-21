@@ -7,6 +7,8 @@
 #include <utility>
 #include "typevalues.cpp"
 #include "VariableHandler.h"
+#include "SimpleDTs.h"
+#include "Functions.h"
 
 const std::string Reader::simpleDT("(int|long|float|double|char|short)");
 //const std::string Reader::mathExpression("(" + Reader::varName + R"(|+|-|\(|\)|\*|/|))");
@@ -48,7 +50,7 @@ void Reader::start()
 				interpret(line);
 			else if (line._Equal("}"))
 			{
-				VariableHandler::funcInit(mem, tempName, tempArgs, tempLines, scopeName);
+				Functions::funcInit(mem, tempName, tempArgs, tempLines, scopeName);
 				interpreting = true;
 				tempLines.clear();
 			}
@@ -69,10 +71,10 @@ void Reader::interpret(const std::string& s)
 		std::cout << VariableHandler::getAsString(mem, matches[1], -1, scopeName) << std::endl;
 	}
 	else if (std::regex_match(s, matches, reNumericInit)) {
-		VariableHandler::numericInit(mem, matches, scopeName);
+		SimpleDTs::numericInit(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reNumericAssign)) {
-		VariableHandler::numericAssign(mem, matches, scopeName);
+		SimpleDTs::numericAssign(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reFuncInit)) {
 		interpreting = false;
