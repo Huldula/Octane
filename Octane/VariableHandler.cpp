@@ -39,12 +39,12 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, s
 	std::smatch matches;
 	while (std::regex_search(s, matches, reIsVar))
 	{
-		const int index = s.find(matches[1]);
+		const size_t index = s.find(matches[1]);
 		//std::cout << "scopeName+matches[1]:   " << scopeName + "." + std::string(matches[1]) << std::endl;
 		Object var = mem.getVar(scopeName + "." + std::string(matches[1]));
 		while (!var.exists())
 		{
-			const int snindex = scopeName.rfind('.');
+			const size_t snindex = scopeName.rfind('.');
 			scopeName = scopeName.substr(0, snindex);
 			var = mem.getVar(scopeName + "." + std::string(matches[1]));
 		}

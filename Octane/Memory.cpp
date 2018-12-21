@@ -62,7 +62,7 @@ Object Memory::getDeepestVar(const std::string& name, std::string scopeName)
 	Object var = getVar(scopeName + "." + name);
 	while (!var.exists())
 	{
-		const int snindex = scopeName.rfind('.');
+		const size_t snindex = scopeName.rfind('.');
 		scopeName = scopeName.substr(0, snindex);
 		var = getVar(scopeName + "." + name);
 	}
