@@ -49,7 +49,6 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, c
 		//Functions::callFunc(mem, matches[1], scopeName, var.location); 
 
 #define TO_STRING(type) val = std::to_string(*(type*)var.location);
-		// TODO remove spaces from args
 #define FUNC_CALL case FUNC: {\
 			std::string argString = StringEditor::replace(matches[2], " ", ""); \
 			Functions::callFunc(mem, matches[1], scopeName, var.location, argString); }\

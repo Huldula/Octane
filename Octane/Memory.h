@@ -4,6 +4,7 @@
 #include <map>
 
 #include "Object.h"
+#include <vector>
 
 class Memory
 {
@@ -21,6 +22,10 @@ public:
 	int getType(const std::string& name, const std::string& scopeName);
 	Object getDeepestVar(const std::string& name, std::string scopeName);
 
+	std::vector<std::string> getFuncHeader(const std::string& name, const std::string& scopeName);
+	void addFuncHeader(const std::string& name, const std::string& scopeName, const std::vector<std::string>& header);
+
 private:
 	std::map<std::string, Object> nameLocations;
+	std::map<std::string, std::vector<std::string>> functionHeaders;
 };

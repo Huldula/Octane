@@ -18,26 +18,32 @@ Functions::~Functions()
 void Functions::funcInit(Memory& mem, const std::string& name, const std::string& args,
 	std::vector<std::string> lines, const std::string& scopeName)
 {
-	std::vector<std::string> varInits = StringEditor::split(args, ',');
-	for (auto& varInit : varInits)
+	if (args.length() > 0)
 	{
-		StringEditor::trim(varInit);
-		std::smatch matches;
-		if (std::regex_match(varInit, matches, Reader::reNumericInit))
+		std::vector<std::string> nameList;
+		std::vector<std::string> varInits = StringEditor::split(args, ',');
+		for (auto& varInit : varInits)
 		{
-			SimpleDTs::numericInit(mem, matches[1], name + "." + std::string(matches[2]), "0", scopeName);
+			StringEditor::trim(varInit);
+			std::smatch matches;
+			if (std::regex_match(varInit, matches, Reader::reNumericInit))
+			{
+				SimpleDTs::numericInit(mem, matches[1], name + '.' + std::string(matches[2]), "0", scopeName);
+				nameList.push_back(matches[2]);
+			}
+			else
+			{
+				std::cout << "Arg is wrong or so" << std::endl;
+			}
 		}
-		else
-		{
-			std::cout << "Arg is wrong or so" << std::endl;
-		}
+		mem.addFuncHeader(name, scopeName, nameList);
 	}
 	std::vector<std::string>* out = new std::vector<std::string>();
 	for (const auto& line : lines)
 	{
 		out->push_back(line);
 	}
-	mem.addVar(scopeName + "." + name, FUNC, out);
+	mem.addVar(scopeName + '.' + name, FUNC, out);
 }
 
 
@@ -46,14 +52,25 @@ void Functions::callFunc(Memory& mem, const std::string& name, const std::string
 	if (argString.length() > 0)
 	{
 		std::vector<std::string> args = StringEditor::split(argString, ',');
-		const std::string innerScopeName = scopeName + "." + name;
-		for (std::string& arg : args)
+		const std::string innerScopeName = scopeName + '.' + name;
+		for (size_t i = 0; i < args.size(); i++)
 		{
+			std::string& arg = args[i];
 			const size_t index = arg.find(':');
-			std::string argName = arg.substr(0, index);
-			std::string value = VariableHandler::getAsString(mem, arg.substr(index + 1),
-				mem.getType(argName, innerScopeName), scopeName);
-			SimpleDTs::numericAssign(mem, argName, value, innerScopeName);
+			if (index > arg.length())
+			{
+				std::string argName = mem.getFuncHeader(name, scopeName)[i];
+				std::string value = VariableHandler::getAsString(mem, arg,
+					mem.getType(argName, innerScopeName), scopeName);
+				SimpleDTs::numericAssign(mem, argName, value, innerScopeName);
+			}
+			else
+			{
+				std::string argName = arg.substr(0, index);
+				std::string value = VariableHandler::getAsString(mem, arg.substr(index + 1),
+					mem.getType(argName, innerScopeName), scopeName);
+				SimpleDTs::numericAssign(mem, argName, value, innerScopeName);
+			}
 		}
 	}
 	Functions::callFunc(mem, name, scopeName, location);
