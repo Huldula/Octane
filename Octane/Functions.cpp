@@ -4,6 +4,7 @@
 #include "Reader.h"
 #include "SimpleDTs.h"
 #include <iostream>
+#include "VariableHandler.h"
 
 
 Functions::Functions()
@@ -40,11 +41,30 @@ void Functions::funcInit(Memory& mem, const std::string& name, const std::string
 }
 
 
+void Functions::callFunc(Memory& mem, const std::string& name, const std::string& scopeName, void* location, const std::string& argString)
+{
+	if (argString.length() > 0)
+	{
+		std::vector<std::string> args = StringEditor::split(argString, ',');
+		const std::string innerScopeName = scopeName + "." + name;
+		for (std::string& arg : args)
+		{
+			const size_t index = arg.find(':');
+			std::string argName = arg.substr(0, index);
+			std::string value = VariableHandler::getAsString(mem, arg.substr(index + 1),
+				mem.getType(argName, innerScopeName), scopeName);
+			SimpleDTs::numericAssign(mem, argName, value, innerScopeName);
+		}
+	}
+	Functions::callFunc(mem, name, scopeName, location);
+}
+
+
 void Functions::callFunc(Memory& mem, const std::string& name, const std::string& scopeName, void* location)
 {
 	Reader r(mem, scopeName + '.' + name);
 	std::vector<std::string> lines = *(std::vector<std::string>*)location;
-	for (const auto& line : lines)
+	for (const std::string& line : lines)
 	{
 		r.interpret(line);
 	}

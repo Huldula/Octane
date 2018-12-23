@@ -29,23 +29,24 @@ print(i)
 double itd = i + 0.5
 print(itd)
 
+
 int printIs() {
 	print(i)
 	print(i0)
 }
-
 printIs()
-
-int args(int h) {
-	print(h)
-}
-
-args(15)
 
 int argsi(int i) {
 	print(i)
 }
-
-argsi(5)
-
+argsi(i: 5)
 print(i)
+argsi(5)
+print(i)
+
+
+
+int args(int h) {
+	print(h)
+}
+args(15)

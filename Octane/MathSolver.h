@@ -11,7 +11,7 @@ public:
 	~MathSolver();
 	T solve(std::string in);
 private:
-	char* expressionToParse;
+	const char* expressionToParse;
 	char peek() const;
 	char get();
 	T number();

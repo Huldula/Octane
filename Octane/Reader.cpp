@@ -1,5 +1,3 @@
-// git test
-
 #include "Reader.h"
 #include "StringEditor.h"
 #include <fstream>
@@ -26,7 +24,7 @@ Reader::Reader()
 Reader::Reader(Memory& mem) : mem(mem), scopeName("")
 {}
 
-Reader::Reader(Memory& mem, std::string scopeName) : mem(mem), scopeName(scopeName)
+Reader::Reader(Memory& mem, std::string scopeName) : mem(mem), scopeName(std::move(scopeName))
 {}
 
 Reader::~Reader()
