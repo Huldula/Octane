@@ -24,29 +24,40 @@ VariableHandler::~VariableHandler()
 
 
 
-std::string VariableHandler::getAsString(Memory& mem, std::string s, const int type)
+std::string VariableHandler::getAsString(Memory& mem, const std::string s, const int type)
 {
 	return VariableHandler::getAsString(mem, s, type, "");
 }
 
-
-std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, const std::string& scopeName)
+// calls MathSolver to solve mathematical expressions with the right datatype
+void VariableHandler::mathEval(std::string& s, int& type)
 {
-	//std::cout << "scopeName in getasstring:   " << scopeName << std::endl;
-	if (std::regex_match(s, reIsNumber))
-		return s;
+	if (type == -1)
+		type = StringEditor::split(s, " ")[0].find(".") == (unsigned int)-1 ? INT : DOUBLE;
 
+#define MATH_SOLVE(type) { \
+			MathSolver<type> solver; \
+			s = std::to_string(solver.solve(s)); \
+		}
+
+	SWITCH(type, MATH_SOLVE, );
+}
+
+
+// replaces the variables and functions with their values in the string
+void VariableHandler::replaceVarFunc(Memory& mem, std::string& s, int& type, const std::string& scopeName)
+{
 	std::smatch matches;
 	while (std::regex_search(s, matches, reIsVar))
 	{
 		const size_t index = s.find(matches[1]);
+		// get the variable to the name
 		const Object var = mem.getVar(std::string(matches[1]), scopeName);
-		//std::cout << "scopeName+matches[1]:   " << scopeName + "." + std::string(matches[1]) << std::endl;
 
+		// set type so the MathSolver knows what to do
 		if (type == -1)
 			type = var.type;
 		std::string val;
-		//Functions::callFunc(mem, matches[1], scopeName, var.location); 
 
 #define TO_STRING(type) val = std::to_string(*(type*)var.location);
 #define FUNC_CALL case FUNC: {\
@@ -57,16 +68,17 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, c
 
 		s.replace(index, matches[1].length(), val);
 	}
+}
 
-	if (type == -1)
-		type = StringEditor::split(s, " ")[0].find(".") == (unsigned int)-1 ? INT : DOUBLE;
+// evaluates all expressions and returns the result as a string
+// TODO make it work with numbers, not as string
+std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, const std::string& scopeName)
+{
+	if (std::regex_match(s, reIsNumber))
+		return s;
 
-#define MATH_SOLVE(type) { \
-			MathSolver<type> solver; \
-			s = std::to_string(solver.solve(s)); \
-		}
+	replaceVarFunc(mem, s, type, scopeName);
 
-	SWITCH(type, MATH_SOLVE, );
-	//std::cout << s << std::endl;
+	mathEval(s, type);
 	return s;
 }

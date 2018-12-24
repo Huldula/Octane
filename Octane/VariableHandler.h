@@ -10,6 +10,8 @@ public:
 	~VariableHandler();
 
 	static std::string getAsString(Memory& mem, std::string s, int type);
+	static void mathEval(std::string& s, int& type);
+	static void replaceVarFunc(Memory& mem, std::string& s, int& type, const std::string& scopeName);
 	static std::string getAsString(Memory& mem, std::string s, int type, const std::string& scopeName);
 
 private:

@@ -31,16 +31,17 @@ Reader::~Reader()
 = default;
 
 
-void Reader::start() 
+void Reader::start()
 {
+	// start reading the file ~beginning of the program
 	std::ifstream input("Resources/helloWorld.oc");
 	std::string line;
 	std::cout << "starting" << std::endl;
 
 	while (std::getline(input, line))
 	{
-		line = StringEditor::split(line, "//")[0];
-		StringEditor::trim(line);
+		line = StringEditor::split(line, "//")[0];	// remove comments
+		StringEditor::trimThis(line);	// remove spaces at the beginning and the end of the line
 
 		if (line.length() > 0)
 		{
@@ -48,19 +49,23 @@ void Reader::start()
 				interpret(line);
 			else if (line._Equal("}"))
 			{
+				// save the function-lines and go along
+				// TODO make the read-pointer jump to the function
 				Functions::funcInit(mem, tempName, tempArgs, tempLines, scopeName);
 				interpreting = true;
 				tempLines.clear();
 			}
 			else
+				// add line to current function
 				tempLines.push_back(line);
 		}
 	}
 }
-
+// interpret one line at a time
 void Reader::interpret(const std::string& s)
 {
 	std::cout << "~~~~~~~~~~~" << s << std::endl;
+
 	//std::cout << "scopeName Reader::interpret  " << scopeName << std::endl;
 
 	std::smatch matches;
@@ -69,15 +74,13 @@ void Reader::interpret(const std::string& s)
 		std::cout << VariableHandler::getAsString(mem, matches[1], -1, scopeName) << std::endl;
 	}
 	else if (std::regex_match(s, matches, reNumericInit)) {
-		SimpleDTs::numericInit(mem, matches, scopeName);
+		SimpleDTs::numericInitEval(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reNumericAssign)) {
-		SimpleDTs::numericAssign(mem, matches, scopeName);
+		SimpleDTs::numericAssignEval(mem, matches, scopeName);
 	}
 	else if (std::regex_match(s, matches, reFuncInit)) {
-		interpreting = false;
-		//std::cout << "func init" << std::endl;
-		//VariableHandler::funcInit(mem, matches);
+		interpreting = false;	// don't interpret the following lines until the funciton ends
 		tempName = matches[2];
 		tempArgs = matches[3];
 	}

@@ -24,11 +24,20 @@ static void rtrim(std::string &s) {
 	}).base(), s.end());
 }
 
-void StringEditor::trim(std::string &s)
+std::string StringEditor::trim(std::string s)
+{
+	ltrim(s);
+	rtrim(s);
+	return s;
+}
+
+void StringEditor::trimThis(std::string& s)
 {
 	ltrim(s);
 	rtrim(s);
 }
+
+
 
 std::vector<std::string> StringEditor::split(const std::string& s, const char c)
 {

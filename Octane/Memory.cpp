@@ -8,6 +8,8 @@ Memory::Memory()
 = default;
 
 
+
+// add a variable to the list in form of an Object
 void Memory::addVar(const std::string& name, const Object& o)
 {
 	nameLocations[name] = o;
@@ -28,7 +30,12 @@ void Memory::addVar(const std::string& name, const int type, void* value, const 
 {
 	addVar(name, Object(type, value), scopeName);
 }
+// ~~~~~~~~~~~~~~~~
 
+
+
+
+// delete variable when its not needed anymore TODO test
 void Memory::deleteVar(const std::string& name, const std::string& scopeName)
 {
 	// TODO make faster if possible & TEST
@@ -37,9 +44,12 @@ void Memory::deleteVar(const std::string& name, const std::string& scopeName)
 	nameLocations.erase(name);
 }
 
+
+
+
+// get a variable in form of an Object by a given name
 Object Memory::getVar(const std::string& name)
 {
-	//std::cout << "about to return " << name << std::endl;
 	return nameLocations[name];
 }
 
@@ -47,18 +57,27 @@ Object Memory::getVar(const std::string& name, const std::string& scopeName)
 {
 	return getDeepestVar(name, scopeName);
 }
+// ~~~~~~~~~~~~~~~~~~~~
 
+
+
+
+// get the location of the value of a variable by a given name
 void* Memory::getLocation(const std::string& name, const std::string& scopeName)
 {
 	return getDeepestVar(name, scopeName).location;
 }
 
 
+// get the type of the value of a variable by a given name
 int Memory::getType(const std::string& name, const std::string& scopeName)
 {
 	return getDeepestVar(name, scopeName).type;
 }
 
+
+// returns the "closest" variable in form of an Object by a given name
+// cecks if var exists in current scope, if true -> return, if false -> check in outer scope
 Object Memory::getDeepestVar(const std::string& name, std::string scopeName)
 {
 	Object var = getVar(scopeName + '.' + name);

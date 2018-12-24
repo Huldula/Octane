@@ -14,6 +14,8 @@ Object::Object(const int type_, void* location_) : type(type_), location(locatio
 Object::~Object()
 = default;
 
+
+// returns the amount of bytes in occupies in RAM
 int Object::size() const
 {
 	switch (type)
