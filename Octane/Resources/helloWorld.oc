@@ -9,6 +9,9 @@ float f0 = -2.4
 double d0 = 3.141234567890
 //print("Hello World! My numbers are: ")
 
+int bob = 4.3
+print(bob)
+
 print(i)
 print(l)
 l = 2
@@ -43,13 +46,16 @@ int argsi(int i, float f = 5.5) // works xD (no {)
 argsi(i: 5)
 argsi(i: 5, f: 8.1)
 argsi(i: 5)
-print(i)
 argsi(10, 17.71)
+argsi(21)
 print(i)
 
 
 
-int args(int h) {
-	print(h)
-}
-args(15)
+//int func(long l = 4) {
+//	print(l)
+//	int funcInFunc(int i) {
+//		print(i)
+//	}
+//	funcInFunc()
+//}

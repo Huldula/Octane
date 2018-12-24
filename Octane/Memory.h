@@ -25,7 +25,11 @@ public:
 	std::vector<std::string> getFuncHeader(const std::string& name, const std::string& scopeName);
 	void addFuncHeader(const std::string& name, const std::string& scopeName, const std::vector<std::string>& header);
 
+	std::vector<std::string> getFuncInits(const std::string& name, const std::string& scopeName);
+	void addFuncInit(const std::string& name, const std::string& scopeName, const std::vector<std::string>& header);
+
 private:
 	std::map<std::string, Object> nameLocations;
 	std::map<std::string, std::vector<std::string>> functionHeaders;
+	std::map<std::string, std::vector<std::string>> functionInits;
 };

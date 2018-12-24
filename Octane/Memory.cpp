@@ -83,6 +83,16 @@ void Memory::addFuncHeader(const std::string& name, const std::string& scopeName
 	functionHeaders[scopeName + '.' + name] = header;
 }
 
+std::vector<std::string> Memory::getFuncInits(const std::string& name, const std::string& scopeName)
+{
+	return functionInits[scopeName + '.' + name];
+}
+
+void Memory::addFuncInit(const std::string& name, const std::string& scopeName, const std::vector<std::string>& value)
+{
+	functionInits[scopeName + '.' + name] = value;
+}
+
 //void Memory::addFuncHeader(const std::string& name, const std::string& scopeName, const std::string& header)
 //{
 //	std::string varNames;

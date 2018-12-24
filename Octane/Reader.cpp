@@ -60,7 +60,7 @@ void Reader::start()
 
 void Reader::interpret(const std::string& s)
 {
-	std::cout << s << std::endl;
+	std::cout << "~~~~~~~~~~~" << s << std::endl;
 	//std::cout << "scopeName Reader::interpret  " << scopeName << std::endl;
 
 	std::smatch matches;
