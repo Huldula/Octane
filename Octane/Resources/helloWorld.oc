@@ -42,6 +42,7 @@ printIs()
 int argsi(int i, float f = 5.5) // works xD (no {)
 	print(i)
 	print(f)
+	printIs()
 }
 argsi(i: 5)
 argsi(i: 5, f: 8.1)
@@ -50,8 +51,13 @@ argsi(10, 17.71)
 argsi(21)
 print(i)
 
+void rec(int i) {
+	print(i)
+	rec(4)
+}
+rec(i)
 
-
+// TODO
 //int func(long l = 4) {
 //	print(l)
 //	int funcInFunc(int i) {

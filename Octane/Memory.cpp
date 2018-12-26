@@ -90,11 +90,30 @@ Object Memory::getDeepestVar(const std::string& name, std::string scopeName)
 	return var;
 }
 
+// like getDeepestVar but returns the name not the var
+std::string Memory::getDeepestName(const std::string& name, std::string scopeName)
+{
+	Object var = getVar(scopeName + '.' + name);
+	while (!var.exists())
+	{
+		const size_t snindex = scopeName.rfind('.');
+		scopeName = scopeName.substr(0, snindex);
+		var = getVar(scopeName + '.' + name);
+	}
+	return scopeName + '.' + name;
+}
 
+
+
+std::vector<std::string> Memory::getFuncHeader(const std::string& fullName)
+{
+	return functionHeaders[fullName];
+}
 
 std::vector<std::string> Memory::getFuncHeader(const std::string& name, const std::string& scopeName)
 {
-	return functionHeaders[scopeName + '.' + name];
+	return getFuncHeader(scopeName + '.' + name);
+	//return functionHeaders[getDeepestName(name, scopeName)];
 }
 
 void Memory::addFuncHeader(const std::string& name, const std::string& scopeName, const std::vector<std::string>& header)
@@ -122,3 +141,10 @@ void Memory::addFuncInit(const std::string& name, const std::string& scopeName, 
 //	}
 //	functionHeaders[scopeName + '.' + name] = varNames;
 //}
+
+
+
+std::string Memory::getScopeName(const std::string& varName)
+{
+	return varName.substr(0, varName.rfind('.'));
+}

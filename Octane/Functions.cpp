@@ -66,6 +66,7 @@ void Functions::assignArgValue(Memory& mem, const std::string& funcName, const s
 	std::vector<std::string>& doneArgs, const size_t varIndex, std::string& arg)
 {
 	const std::string innerScopeName = scopeName + '.' + funcName;
+	//const std::string innerScopeName = mem.getDeepestName(funcName, scopeName);
 	const size_t index = arg.find(':');
 	std::string argName;
 	std::string value;
@@ -127,7 +128,6 @@ void Functions::assignAllDefaultArgValues(Memory& mem, const std::string& funcNa
 void Functions::callFunc(Memory& mem, const std::string& funcName, const std::string& scopeName, void* location, const std::string& argString)
 {
 	std::vector<std::string> doneArgs;
-	const std::string innerScopeName = scopeName + '.' + funcName;
 	if (argString.length() > 0)
 	{
 		assignAllGivenArgValues(mem, funcName, scopeName, argString, doneArgs);
@@ -147,6 +147,7 @@ void Functions::callFunc(Memory& mem, const std::string& funcName, const std::st
 void Functions::callFunc(Memory& mem, const std::string& funcName, const std::string& scopeName, void* location)
 {
 	Reader r(mem, scopeName + '.' + funcName);
+	//Reader r(mem, mem.getDeepestName(funcName, scopeName));
 	std::vector<std::string> lines = *(std::vector<std::string>*)location;
 	for (const std::string& line : lines)
 	{

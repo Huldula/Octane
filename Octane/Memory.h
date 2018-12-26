@@ -21,13 +21,16 @@ public:
 	void* getLocation(const std::string& name, const std::string& scopeName);
 	int getType(const std::string& name, const std::string& scopeName);
 	Object getDeepestVar(const std::string& name, std::string scopeName);
+	std::string getDeepestName(const std::string& name, std::string scopeName);
 
 	std::vector<std::string> getFuncHeader(const std::string& name, const std::string& scopeName);
+	std::vector<std::string> getFuncHeader(const std::string& fullName);
 	void addFuncHeader(const std::string& name, const std::string& scopeName, const std::vector<std::string>& header);
 
 	std::vector<std::string> getFuncInits(const std::string& name, const std::string& scopeName);
 	void addFuncInit(const std::string& name, const std::string& scopeName, const std::vector<std::string>& header);
 
+	static std::string getScopeName(const std::string& varName);
 private:
 	std::map<std::string, Object> nameLocations;
 	std::map<std::string, std::vector<std::string>> functionHeaders;

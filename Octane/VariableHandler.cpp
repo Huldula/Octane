@@ -52,7 +52,8 @@ void VariableHandler::replaceVarFunc(Memory& mem, std::string& s, int& type, con
 	{
 		const size_t index = s.find(matches[1]);
 		// get the variable to the name
-		const Object var = mem.getVar(std::string(matches[1]), scopeName);
+		const std::string deepestName = mem.getDeepestName(matches[1], scopeName);
+		const Object var = mem.getVar(deepestName);
 
 		// set type so the MathSolver knows what to do
 		if (type == -1)
@@ -60,9 +61,9 @@ void VariableHandler::replaceVarFunc(Memory& mem, std::string& s, int& type, con
 		std::string val;
 
 #define TO_STRING(type) val = std::to_string(*(type*)var.location);
-#define FUNC_CALL case FUNC: {\
+#define FUNC_CALL case FUNC: { \
 			std::string argString = StringEditor::replace(matches[2], " ", ""); \
-			Functions::callFunc(mem, matches[1], scopeName, var.location, argString); }\
+			Functions::callFunc(mem, matches[1], Memory::getScopeName(deepestName), var.location, argString); } \
 			default: break;
 		SWITCH(var.type, TO_STRING, FUNC_CALL);
 
@@ -76,7 +77,6 @@ std::string VariableHandler::getAsString(Memory& mem, std::string s, int type, c
 {
 	if (std::regex_match(s, reIsNumber))
 		return s;
-
 	replaceVarFunc(mem, s, type, scopeName);
 
 	mathEval(s, type);
